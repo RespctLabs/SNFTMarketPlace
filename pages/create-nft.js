@@ -6,15 +6,24 @@ import Web3Modal from "web3modal";
 import web3 from "web3";
 import Image from "next/Image";
 import { ParentAddress } from "../config";
-
+import NFTImage from "../public/assets/svg/nftimage.svg";
 // // import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
-
 const client = create("https://ipfs.infura.io:5001/api/v0");
+// import { writeJsonFile } from "write-json-file";
+
+// let data = require("../data.json");
 
 export default function CreateItem() {
+  const [basic, setBasic] = useState({
+    image: NFTImage,
+    name: "Azuki",
+    creatorId: "shubham",
+    tokenId: "0",
+    level: 0,
+  });
   const [fileUrl, setFileUrl] = useState(null);
-  const [formInput, updateFormInput] = useState({
+  let [formInput, updateFormInput] = useState({
     Image: "",
     name: "",
     creatorId: "",
@@ -23,6 +32,55 @@ export default function CreateItem() {
   });
 
   const router = useRouter();
+
+  async function handleSubmit(event) {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    event.preventDefault();
+
+    // calling smart contract on function getComposableCount
+    let contract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    console.log(signer, "signer");
+
+    let count = await contract.getComposableCount();
+
+    console.log(count, "count");
+
+    // converting bignumber value into string
+    let tokenId = count.toString();
+    console.log(tokenId, "tokenId");
+    setBasic((prevvalue) => ({
+      ...prevvalue,
+      tokenId: tokenId,
+    }));
+
+    console.log(basic, "basic");
+
+    let url = "";
+
+    try {
+      const added = await client.add(basic.toString(), {
+        progress: (prog) => console.log(`received: ${prog}`),
+      });
+      url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      console.log(url, "url");
+      setFileUrl(url);
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+
+    // let x = { tokenId: url };
+    console.log(tokenId, url);
+    // await writeJsonFile(data, x);
+  }
 
   async function onChange(e) {
     const file = e.target.files[0];
@@ -38,7 +96,7 @@ export default function CreateItem() {
   }
 
   async function listNFTForSale() {
-    const url = await uploadToIPFS();
+    // const url = await uploadToIPFS();
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -110,6 +168,12 @@ export default function CreateItem() {
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
           Create NFT
+        </button>
+        <button
+          onClick={handleSubmit}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          get Composable
         </button>
       </div>
     </div>

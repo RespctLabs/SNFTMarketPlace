@@ -93,11 +93,24 @@ contract ComposableParentERC721 is
         return cid;
     }
 
+    function getComposableCount() public view returns (uint256) {
+        return composableCount;
+    }
+
     function isUpgradeable(uint256 cid) public returns (bool) {
         // msg.sender is owner of the composable
         // has enough engagement points at tierId = 0
         // has sufficient engagement points at tid-1
         require(balanceOf(msg.sender) == 1);
+    }
+
+    function getMintCost() public view returns (uint256) {
+        return mintCost;
+    }
+
+    function setMintCost(uint256 _cost) public {
+        require(hasRole(ADMIN_ROLE, _msgSender()));
+        mintCost = _cost;
     }
 
     /**
