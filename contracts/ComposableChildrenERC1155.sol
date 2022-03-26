@@ -7,9 +7,9 @@ pragma solidity ^0.6.0;
 /// @notice receives Engagement tokens and attaches tier to composable ERC998
 /// @dev this contract maintains engagement tokens at id 0,
 
-import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol";
+import "@openzeppelin/contracts/presets/ERC1155PresetMinterPauser.sol";
 // import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
+import "@openzeppelin/contracts/token/ERC1155/ERC1155Holder.sol";
 import "./ComposableParentERC721.sol";
 
 contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
