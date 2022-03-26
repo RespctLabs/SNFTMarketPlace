@@ -67,10 +67,10 @@ contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
         uint256 _amount,
         bytes memory _data
     ) public {
-        require(
-            hasRole(MINTER_ROLE, _msgSender()),
-            "ERC1155TUMP unauthorized engagement minter"
-        );
+        // require(
+        //     hasRole(MINTER_ROLE, _msgSender()),
+        //     "ERC1155TUMP unauthorized engagement minter"
+        // );
 
         mint(_to, 0, _amount, _data);
     }

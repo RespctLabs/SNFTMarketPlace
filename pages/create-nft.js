@@ -42,7 +42,6 @@ export default function CreateItem() {
     const signer = provider.getSigner();
 
     event.preventDefault();
-  
 
     // calling smart contract on function getComposableCount
     let contract = new ethers.Contract(
@@ -85,22 +84,45 @@ export default function CreateItem() {
     console.log(tokenId, url);
     // await writeJsonFile(data, x);
   }
+  async function handleSetEngagement(e){
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let t1 = await contract.mintEngagementPoints(
+      "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+      500,
+      "0x00"
+    );
+    const tx = await t1.wait();
+    console.log(tx, "tx");
+
+  }
   async function handleUpgrade(e) {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     console.log(signer._address);
-    // let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let parentcontract = new ethers.Contract(ParentAddress, ParentContract.abi, signer);
     // console.log(signer, "signer");
     // let t1 = await contract.mintEngagementPoints(
-    //   signer.getAddress(),
+    //   "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
     //   500,
-    //   (0).toString(16),
-    //   { from: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266" }
+    //   "0x00"
     // );
     // const tx = await t1.wait();
     // console.log(tx, "tx");
+
+    let t2 = await contract.upgradeSNFT("0x01", 1,"0x01");
+    const tx2 = await t2.wait();
+    console.log(tx2, "tx2");
+    res =  await parentcontract.childBalance("0x01", contract.address, 1);
+    const tx3 = await res.wait();
+    console.log(tx3, "tx3");
+
     // let transaction = await contract.mint({
     //   from: signer.getAddress(),
     //   value: web3.utils.toWei("2"),
@@ -209,10 +231,16 @@ export default function CreateItem() {
           get Composable
         </button>
         <button
+          onClick={handleSetEngagement}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          Set Engagement Point
+        </button>
+        <button
           onClick={handleUpgrade}
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
-          upgrade
+          Upgrade
         </button>
       </div>
     </div>
