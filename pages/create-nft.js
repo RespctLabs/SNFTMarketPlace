@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import { create as ipfsHttpClient } from "ipfs-http-client";
+import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 import { useRouter } from "next/router";
 import Web3Modal from "web3modal";
 import web3 from "web3";
-const client = ipfsHttpClient("https://ipfs.infura.io:5001/api/v0");
+const client = create("https://ipfs.infura.io:5001/api/v0");
 
 import { ParentAddress } from "../config";
 
@@ -14,10 +14,13 @@ import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/Co
 export default function CreateItem() {
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, updateFormInput] = useState({
-    price: "",
+    Image: "",
     name: "",
+    creatorId: "",
+    fileUrl: fileUrl,
     description: "",
   });
+
   const router = useRouter();
 
   async function onChange(e) {
@@ -32,27 +35,9 @@ export default function CreateItem() {
       console.log("Error uploading file: ", error);
     }
   }
-  async function uploadToIPFS() {
-    const { name, description, price } = formInput;
-    if (!name || !description || !price || !fileUrl) return;
-    /* first, upload to IPFS */
-    const data = JSON.stringify({
-      name,
-      description,
-      image: fileUrl,
-    });
-    try {
-      const added = await client.add(data);
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      /* after file is uploaded to IPFS, return the URL to use it in the transaction */
-      return url;
-    } catch (error) {
-      console.log("Error uploading file: ", error);
-    }
-  }
 
   async function listNFTForSale() {
-    // const url = await uploadToIPFS();
+    const url = await uploadToIPFS();
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
@@ -108,8 +93,8 @@ export default function CreateItem() {
           onChange={(e) =>
             updateFormInput({ ...formInput, price: e.target.value })
           }
-        />
-        <input type="file" name="Asset" className="my-4" onChange={onChange} /> */}
+        />*/}
+        <input type="file" name="Asset" className="my-4" onChange={onChange} />
         {/* {fileUrl && <img className="rounded mt-4" width="350" src={fileUrl} />} */}
         <button
           onClick={listNFTForSale}
