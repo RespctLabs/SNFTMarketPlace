@@ -31,7 +31,7 @@ async function main() {
     "./config.js",
     `
   export const ParentAddress = "${ParentNFT.address}"
-  export const ChildAddress = "${ChildERC1155.address}"
+  export const ChildAddress = "${childERC1155.address}"
 
   `
   );
