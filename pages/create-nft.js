@@ -6,9 +6,11 @@ import Web3Modal from "web3modal";
 import web3 from "web3";
 import Image from "next/Image";
 import { ParentAddress } from "../config";
+import { ChildAddress } from "../config";
 import NFTImage from "../public/assets/svg/nftimage.svg";
 // // import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
 import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
+import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
 const client = create("https://ipfs.infura.io:5001/api/v0");
 // import { writeJsonFile } from "write-json-file";
 
@@ -40,6 +42,7 @@ export default function CreateItem() {
     const signer = provider.getSigner();
 
     event.preventDefault();
+  
 
     // calling smart contract on function getComposableCount
     let contract = new ethers.Contract(
@@ -49,6 +52,7 @@ export default function CreateItem() {
     );
 
     console.log(signer, "signer");
+    console.log(signer.address);
 
     let count = await contract.getComposableCount();
 
@@ -81,7 +85,36 @@ export default function CreateItem() {
     console.log(tokenId, url);
     // await writeJsonFile(data, x);
   }
+  async function handleUpgrade(e) {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+    console.log(signer._address);
+    // let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    // console.log(signer, "signer");
+    // let t1 = await contract.mintEngagementPoints(
+    //   signer.getAddress(),
+    //   500,
+    //   (0).toString(16),
+    //   { from: "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266" }
+    // );
+    // const tx = await t1.wait();
+    // console.log(tx, "tx");
+    // let transaction = await contract.mint({
+    //   from: signer.getAddress(),
+    //   value: web3.utils.toWei("2"),
+    // });
+    // console.log(transaction, "transaction");
 
+    // // let listingPrice = await contract.getListingPrice();
+    // // listingPrice = listingPrice.toString();
+    // // let transaction = await contract.createToken(url, price, {
+    // //   value: listingPrice,
+    // // });
+    // const tx = await transaction.wait();
+    // console.log(tx, "tx");
+  }
   async function onChange(e) {
     const file = e.target.files[0];
     try {
@@ -174,6 +207,12 @@ export default function CreateItem() {
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
           get Composable
+        </button>
+        <button
+          onClick={handleUpgrade}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          upgrade
         </button>
       </div>
     </div>
