@@ -72,7 +72,7 @@ contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
         //     "ERC1155TUMP unauthorized engagement minter"
         // );
 
-        mint(_to, 0, _amount, _data);
+        _mint(_to, 0, _amount, _data);
     }
 
     /// @notice upgrade user tier
