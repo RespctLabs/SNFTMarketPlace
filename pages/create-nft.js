@@ -97,7 +97,6 @@ export default function CreateItem() {
     );
     const tx = await t1.wait();
     console.log(tx, "tx");
-
   }
   async function handleUpgrade(e) {
     const web3Modal = new Web3Modal();
@@ -105,7 +104,11 @@ export default function CreateItem() {
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
-    let parentcontract = new ethers.Contract(ParentAddress, ParentContract.abi, signer);
+    let parentcontract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
     // console.log(signer, "signer");
     // let t1 = await contract.mintEngagementPoints(
     //   "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
@@ -114,13 +117,16 @@ export default function CreateItem() {
     // );
     // const tx = await t1.wait();
     // console.log(tx, "tx");
-    let t1 = await parentcontract.getComposableCount()
-    let t2 = await contract.upgradeSNFT("0x01", 1,"0x01");
+    let t1 = await parentcontract.getComposableCount();
+    let t2 = await contract.upgradeSNFT("0x01", 1, web3.utils.encodePacked(1), {
+      from: signer.getAddress(),
+    });
+    //.upgradeSNFT(composable1, multiTokenTier1, web3.utils.encodePacked(composable1),{from:user1});
     const tx2 = await t2.wait();
     console.log(tx2, "tx2");
-    res =  await parentcontract.childBalance("0x01", contract.address, 1);
-    const tx3 = await res.wait();
-    console.log(tx3, "tx3");
+    // const transaction = await parentcontract.childBalance("0x01", contract.address, 1);
+    // const tx3 = await transaction.wait();
+    // console.log(tx3, "tx3");
 
     // let transaction = await contract.mint({
     //   from: signer.getAddress(),
@@ -149,6 +155,38 @@ export default function CreateItem() {
     }
   }
 
+  async function handleLevelcheck() {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    let child = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+
+    /* next, create the item */
+    // const price = ethers.utils.parseUnits(formInput.price, "ether");
+    let contract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+    // console.log(signer, "signer");
+
+    //  assert.equal(await erc998.getLevel(composable1, erc1155.address),1);
+
+    let transaction = await contract.getLevel("0x01", child.address);
+
+    console.log(transaction, "transaction");
+
+    // let listingPrice = await contract.getListingPrice();
+    // listingPrice = listingPrice.toString();
+    // let transaction = await contract.createToken(url, price, {
+    //   value: listingPrice,
+    // });
+    // const tx = await transaction.wait();
+    // console.log(tx, "tx");
+  }
+
   async function listNFTForSale() {
     // const url = await uploadToIPFS();
     const web3Modal = new Web3Modal();
@@ -163,7 +201,6 @@ export default function CreateItem() {
       ParentContract.abi,
       signer
     );
-dfs dfkllf ;fdmcmf
     console.log(signer, "signer");
 
     let transaction = await contract.mint({
@@ -180,7 +217,7 @@ dfs dfkllf ;fdmcmf
     // });
     const tx = await transaction.wait();
     console.log(tx, "tx");
-    router.push("/");
+    // router.push("/");
   }
 
   return (
@@ -240,6 +277,12 @@ dfs dfkllf ;fdmcmf
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
           Upgrade
+        </button>
+        <button
+          onClick={handleLevelcheck}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          get level
         </button>
       </div>
     </div>

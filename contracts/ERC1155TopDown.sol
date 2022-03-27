@@ -50,7 +50,7 @@ contract ERC1155TopDown is
         uint256 composableId,
         address childContract, // ERC1155TUMP contract address
         uint256 tierId
-    ) external view override returns (uint256) {
+    ) public view override returns (uint256) {
         return _balances[composableId][childContract][tierId];
     }
 
