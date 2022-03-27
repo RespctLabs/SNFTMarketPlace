@@ -84,14 +84,14 @@ export default function CreateItem() {
     console.log(tokenId, url);
     // await writeJsonFile(data, x);
   }
-  async function handleSetEngagement(e){
+  async function handleSetEngagement(e) {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
     let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
     let t1 = await contract.mintEngagementPoints(
-      "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+      signer.getAddress(),
       500,
       "0x00"
     );
@@ -104,7 +104,6 @@ export default function CreateItem() {
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);
     const signer = provider.getSigner();
-    console.log(signer._address);
     let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
     let parentcontract = new ethers.Contract(ParentAddress, ParentContract.abi, signer);
     // console.log(signer, "signer");
@@ -115,7 +114,7 @@ export default function CreateItem() {
     // );
     // const tx = await t1.wait();
     // console.log(tx, "tx");
-
+    let t1 = await parentcontract.getComposableCount()
     let t2 = await contract.upgradeSNFT("0x01", 1,"0x01");
     const tx2 = await t2.wait();
     console.log(tx2, "tx2");
@@ -164,7 +163,7 @@ export default function CreateItem() {
       ParentContract.abi,
       signer
     );
-
+dfs dfkllf ;fdmcmf
     console.log(signer, "signer");
 
     let transaction = await contract.mint({
