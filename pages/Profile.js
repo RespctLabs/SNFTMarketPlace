@@ -1,76 +1,36 @@
 import React, { useEffect, useContext } from "react";
-import web3 from "web3";
-import { ethers } from "ethers";
 
 import Tity from "../components/Tity";
 import BannerPic from "../public/images/profilebanner.svg";
 import ProfileImage from "../public/images/profileImage.svg";
 import Filter from "../public/svg/filter.svg";
-import { BlockchainContext } from "../context/BlockchainContext.tsx";
-import { ParentAddress, ChildAddress } from "../config";
-
-import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
-import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
 
 import NFTCard from "../components/common/NftCard";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Profile() {
-  const { getProvider } = useContext(BlockchainContext);
+  const [NumberOfNFTs, setNumberOfNFTs] = React.useState(100);
+  const [description, setDescription] = React.useState("2");
+  const [Nfts, setNfts] = React.useState([]);
 
-  // useEffect(() => {
-  // getNumberofNFTs();
-  // });
-  async function getNumberofNFTs() {
-    const provider = await getProvider();
-    const signer = provider.getSigner();
-
-    // calling smart contract on function getComposableCount
-    let contract = new ethers.Contract(
-      ParentAddress,
-      ParentContract.abi,
-      signer
+  function generateNFTs(event) {
+    for (var i = 1; i <= NumberOfNFTs; i++) {
+      Nfts.push(
+        <Link href={"/nfts/" + i} passHref>
+          <a>
+            <NFTCard key={i} number={i} element={""} />
+          </a>
+        </Link>
+      );
+    }
+    return (
+      <div id="cards" className="md:grid md:grid-cols-4 md:gap-12">
+        {Nfts}
+      </div>
     );
-
-    console.log(signer, "signer");
-    console.log(signer.address);
-
-    let count = await contract.getComposableCount();
-
-    console.log(count, "count");
-
-    // // converting bignumber value into string
-    // let tokenId = count.toString();
-    // console.log(tokenId, "tokenId");
-    // setBasic((prevvalue) => ({
-    //   ...prevvalue,
-    //   tokenId: tokenId,
-    // }));
-
-    // console.log(basic, "basic");
-
-    // let url = "";
-
-    // try {
-    //   const added = await client.add(basic.toString(), {
-    //     progress: (prog) => console.log(`received: ${prog}`),
-    //   });
-    //   url = `https://ipfs.infura.io/ipfs/${added.path}`;
-    //   console.log(url, "url");
-    //   setFileUrl(url);
-    // } catch (error) {
-    //   console.log("Error uploading file: ", error);
-    // }
-
-    // // let x = { tokenId: url };
-    // console.log(tokenId, url);
-    // // await writeJsonFile(data, x);
   }
 
-  const [information, setInformation] = React.useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-  ]);
-  const [description, setDescription] = React.useState("2");
   return (
     <div className=" container mx-auto">
       <div className="mx-4 md:mx-0">
@@ -129,16 +89,6 @@ export default function Profile() {
               Profile
             </button>
           </div>
-          <div>
-            <button
-              onClick={(e) => {
-                getNumberofNFTs();
-              }}
-              className="bg-OurBlack rounded-lg text-[#03AFD0] md:mx-6"
-            >
-              check
-            </button>
-          </div>
         </div>
         <div>
           <button className="bg-white text-black rounded-2xl drop-shadow-white px-2 md:px-5 py-1 md:mr-10">
@@ -147,14 +97,7 @@ export default function Profile() {
           </button>
         </div>
       </div>
-      <div id="cards" className="md:grid md:grid-cols-4 md:gap-12">
-        {information.map((item) => (
-          <div key={item}>
-            <NFTCard element={item} />
-            <br />
-          </div>
-        ))}
-      </div>
+      <div>{generateNFTs()}</div>
     </div>
   );
 }
