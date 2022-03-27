@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 export default function NftCard(props) {
   return (
-    <div className={styles.vishnugaandu + " p-2 m-8 rounded-lg bg-OurBlack w-60 "} >
+    <div className={styles.headerDiv + " p-2 m-8 rounded-lg bg-OurBlack w-60 "} >
       <div
         style={{
           display: "flex",
