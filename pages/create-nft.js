@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ethers } from "ethers";
 import { create } from "ipfs-http-client";
 import { useRouter } from "next/router";
@@ -13,10 +13,12 @@ import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/Co
 import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
 const client = create("https://ipfs.infura.io:5001/api/v0");
 // import { writeJsonFile } from "write-json-file";
+import { BlockchainContext } from "../context/BlockchainContext.tsx";
 
 // let data = require("../data.json");
 
 export default function CreateItem() {
+  const { getProvider } = useContext(BlockchainContext);
   const [basic, setBasic] = useState({
     image: NFTImage,
     name: "Azuki",
@@ -189,9 +191,7 @@ export default function CreateItem() {
 
   async function listNFTForSale() {
     // const url = await uploadToIPFS();
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
 
     /* next, create the item */
