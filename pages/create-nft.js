@@ -38,9 +38,7 @@ export default function CreateItem() {
   const router = useRouter();
 
   async function handleSubmit(event) {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
 
     event.preventDefault();
@@ -87,9 +85,7 @@ export default function CreateItem() {
     // await writeJsonFile(data, x);
   }
   async function handleSetEngagement(e) {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
     let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
     let t1 = await contract.mintEngagementPoints(
@@ -101,9 +97,7 @@ export default function CreateItem() {
     console.log(tx, "tx");
   }
   async function handleUpgrade(e) {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
     let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
     let parentcontract = new ethers.Contract(
@@ -158,9 +152,7 @@ export default function CreateItem() {
   }
 
   async function handleLevelcheck() {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
 
     let child = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
