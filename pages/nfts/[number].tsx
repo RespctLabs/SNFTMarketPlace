@@ -13,12 +13,45 @@ import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
 
 import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
 
-import { BlockchainContext } from "../../context/BlockchainContext.tsx";
+import { BlockchainContext } from "../../context/BlockchainContext";
 import { ParentAddress } from "../../config";
+
+import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
 export default function Buy(props) {
   const { getProvider } = useContext(BlockchainContext);
+  const projectId = '...';
+  const projectSecret = '...';
+  const ipfs = create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
+  const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64')
 
+  // let ipfs: IPFSHTTPClient | undefined;
+  // try {
+  //   ipfs = create({
+  //     url: "https://ipfs.infura.io:5001/api/v0",
+  //   });
+  // } catch (error) {
+  //   console.error("IPFS error ", error);
+  //   ipfs = undefined;
+  // }
+  const client = create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    apiPath: '/api/v0/',
+    headers: {
+      authorization: auth
+    }
+  })
+  async function makeipfsURL() {
+    const json = { level: 0};
+    // upload files
+    let jsonObj = JSON.stringify(json);
+
+    const result = await (ipfs as IPFSHTTPClient).add(jsonObj);
+
+
+ 
   async function mintNFt() {
     // minting function here
     // const url = await uploadToIPFS();
