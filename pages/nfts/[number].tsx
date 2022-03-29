@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import BuyNFT from "../../public/images/buyNft.svg";
 import Image from "next/image";
-import { ethers } from "ethers";
-import web3 from "web3";
 import Polygon from "../../public/svg/polygon.svg";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import ProfileImage from "../../public/images/profileImage.svg";
@@ -11,14 +9,47 @@ import Level3 from "../../public/images/level3.svg";
 import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
 
-import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
-
-import { BlockchainContext } from "../../context/BlockchainContext";
-import { ParentAddress } from "../../config";
-
 import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
+import web3 from "web3";
+import { ethers } from "ethers";
+import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
+import ChildContract from "../../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
+import { BlockchainContext } from "../../context/BlockchainContext";
+import { ParentAddress, ChildAddress } from "../../config";
+
 export default function Buy(props) {
+  async function listNFTForSale() {
+    // const url = await uploadToIPFS();
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+
+    /* next, create the item */
+    // const price = ethers.utils.parseUnits(formInput.price, "ether");
+    let contract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+    console.log(signer, "signer");
+
+    let transaction = await contract.mint({
+      from: signer.getAddress(),
+      value: web3.utils.toWei("2"),
+    });
+
+    console.log(transaction, "transaction");
+
+    // let listingPrice = await contract.getListingPrice();
+    // listingPrice = listingPrice.toString();
+    // let transaction = await contract.createToken(url, price, {
+    //   value: listingPrice,
+    // });
+    const tx = await transaction.wait();
+    console.log(tx, "tx");
+    // router.push("/");
+  }
+
   const { getProvider } = useContext(BlockchainContext);
   const projectId = "...";
   const projectSecret = "...";
@@ -29,6 +60,8 @@ export default function Buy(props) {
   });
   const auth =
     "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+
+  // TODO:useeffect #1 that calls getComposibleCount and checks if route is valid
 
   // let ipfs: IPFSHTTPClient | undefined;
   // try {
@@ -145,7 +178,7 @@ export default function Buy(props) {
                 <PrimaryButton
                   onClick={(e) => {
                     e.preventDefault();
-                    mintNFt();
+                    listNFTForSale();
                   }}
                   text="Buy"
                   color="[#03AFD0]"
