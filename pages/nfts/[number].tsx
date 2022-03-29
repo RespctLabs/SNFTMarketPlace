@@ -19,6 +19,8 @@ import { BlockchainContext } from "../../context/BlockchainContext";
 import { ParentAddress, ChildAddress } from "../../config";
 
 export default function Buy(props) {
+  const [Hash, setHash] = React.useState(undefined);
+
   async function listNFTForSale() {
     // const url = await uploadToIPFS();
     const provider = await getProvider();
@@ -47,6 +49,10 @@ export default function Buy(props) {
     // });
     const tx = await transaction.wait();
     console.log(tx, "tx");
+    console.log(tx.transactionHash, "tx");
+    console.log(parseInt(BigInt(tx.events[1].args.tokenId._hex).toString(10)));
+    setHash(tx.transactionHash);
+
     // router.push("/");
   }
 
@@ -174,6 +180,7 @@ export default function Buy(props) {
                   </div>
                 </div>
               </div>
+              <p className="text-white"> {Hash ? Hash : ""}</p>
               <div className="flex flex-col space-y-5">
                 <PrimaryButton
                   onClick={(e) => {
