@@ -12,19 +12,22 @@ import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
 import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
 import web3 from "web3";
-import { ethers } from "ethers";
+import { ethers, Signer } from "ethers";
 import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
 import ChildContract from "../../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
 import { BlockchainContext } from "../../context/BlockchainContext";
 import { ParentAddress, ChildAddress } from "../../config";
+import { getAccountPath } from "ethers/lib/utils";
 
 export default function Buy(props) {
   const [Hash, setHash] = React.useState(undefined);
+  const [Buyer, setBuyer] = React.useState(undefined);
+  const { getProvider, connectedAccount } = useContext(BlockchainContext);
 
   async function listNFTForSale() {
-    // const url = await uploadToIPFS();
-    const provider = await getProvider();
+    const provider = getProvider();
     const signer = provider.getSigner();
+    // const url = await uploadToIPFS();
 
     /* next, create the item */
     // const price = ethers.utils.parseUnits(formInput.price, "ether");
@@ -41,6 +44,8 @@ export default function Buy(props) {
     });
 
     console.log(transaction, "transaction");
+    console.log(transaction.to, "transaction");
+    setBuyer(transaction.to);
 
     // let listingPrice = await contract.getListingPrice();
     // listingPrice = listingPrice.toString();
@@ -56,7 +61,6 @@ export default function Buy(props) {
     // router.push("/");
   }
 
-  const { getProvider } = useContext(BlockchainContext);
   const projectId = "...";
   const projectSecret = "...";
   const ipfs = create({
@@ -182,20 +186,25 @@ export default function Buy(props) {
               </div>
               <p className="text-white"> {Hash ? Hash : ""}</p>
               <div className="flex flex-col space-y-5">
-                <PrimaryButton
-                  onClick={(e) => {
-                    e.preventDefault();
-                    listNFTForSale();
-                  }}
-                  text="Buy"
-                  color="[#03AFD0]"
-                  shadow="[#45ABD6]"
-                />
-                {/* <PrimaryButton
-                  text="Upgrade"
-                  color="[#7834BF]"
-                  shadow="[#000000]"
-                /> */}
+                {Hash ? (
+                  ""
+                ) : Buyer === connectedAccount ? (
+                  <PrimaryButton
+                    text="Upgrade"
+                    color="[#7834BF]"
+                    shadow="[#000000]"
+                  />
+                ) : (
+                  <PrimaryButton
+                    onClick={(e) => {
+                      e.preventDefault();
+                      listNFTForSale();
+                    }}
+                    text="Buy"
+                    color="[#03AFD0]"
+                    shadow="[#45ABD6]"
+                  />
+                )}
               </div>
             </div>
           </div>
