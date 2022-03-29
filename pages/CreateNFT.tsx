@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-no-undef */
 import React from "react";
-import CreateNft from "../../public/images/CreateNft.svg";
+import CreateNft from "../public/images/CreateNft.svg";
 import Image from "next/image";
 import Respct from "../../public/svg/respct.svg";
 import Instagram from "../../public/socialSvg/Instagram.svg";
@@ -9,8 +9,8 @@ import Twitter from "../../public/socialSvg/Twitter.svg";
 import Twitch from "../../public/socialSvg/Twitch.svg";
 import Youtube from "../../public/socialSvg/Youtube.svg";
 import PrimaryButton from "../components/common/PrimaryButton";
-import VerticalNft from "../../public/images/verticalNFT.svg";
-import FVerticalNft from "../../public/images/fverticalNFT.svg";
+import VerticalNft from "../public/images/verticalNFT.svg";
+import FVerticalNft from "../public/images/fverticalNFT.svg";
 
 export default function ProfileSettings() {
   return (

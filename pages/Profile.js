@@ -38,7 +38,7 @@ export default function Profile() {
       try {
         let count = await parentContract.getComposableCount();
         console.log("count", count);
-        setNumberOfNFTs(BigInt(count._hex).toString(10));
+        setNumberOfNFTs(parseInt(BigInt(count._hex).toString(10)));
         console.log("count", NumberOfNFTs);
       } catch (err) {
         console.log("count");
@@ -104,7 +104,7 @@ export default function Profile() {
       );
     }
     Nfts.push(
-      <Link href={"/CreateNFT"} passHref>
+      <Link href={"/nfts/" + (NumberOfNFTs + 1)} passHref>
         <a>
           <div className=" headerDiv p-2 m-8 rounded-lg bg-[#920fc1] hover:bg-[#6e0b91] w-60 h-60 flex justify-center items-center">
             <div className="flex justify-between text-white hover:text-black font-bold text-2xl text-center">
