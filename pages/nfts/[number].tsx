@@ -20,10 +20,15 @@ import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 
 export default function Buy(props) {
   const { getProvider } = useContext(BlockchainContext);
-  const projectId = '...';
-  const projectSecret = '...';
-  const ipfs = create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
-  const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64')
+  const projectId = "...";
+  const projectSecret = "...";
+  const ipfs = create({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+  });
+  const auth =
+    "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
 
   // let ipfs: IPFSHTTPClient | undefined;
   // try {
@@ -35,23 +40,22 @@ export default function Buy(props) {
   //   ipfs = undefined;
   // }
   const client = create({
-    host: 'ipfs.infura.io',
+    host: "ipfs.infura.io",
     port: 5001,
-    protocol: 'https',
-    apiPath: '/api/v0/',
+    protocol: "https",
+    apiPath: "/api/v0/",
     headers: {
-      authorization: auth
-    }
-  })
+      authorization: auth,
+    },
+  });
   async function makeipfsURL() {
-    const json = { level: 0};
+    const json = { level: 0 };
     // upload files
     let jsonObj = JSON.stringify(json);
 
     const result = await (ipfs as IPFSHTTPClient).add(jsonObj);
+  }
 
-
- 
   async function mintNFt() {
     // minting function here
     // const url = await uploadToIPFS();
@@ -79,7 +83,7 @@ export default function Buy(props) {
   }
   return (
     <>
-      <div className="container md:mx-auto ">
+      <div className="container md:mx-auto  ">
         <div className="flex flex-col md:flex-row md:pt-12 ">
           <div id="left" className="md:w-1/2">
             <div className="flex justify-center mx-4 md:mx-0">

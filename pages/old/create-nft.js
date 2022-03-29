@@ -2,18 +2,16 @@ import { useState, useContext } from "react";
 import { ethers } from "ethers";
 import { create } from "ipfs-http-client";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
 import web3 from "web3";
 import Image from "next/Image";
-import { ParentAddress, ChildAddress } from "../config";
-import {} from "../config";
-import NFTImage from "../public/assets/svg/nftimage.svg";
+import { ParentAddress, ChildAddress } from "../../config";
+import NFTImage from "../../public/images/profileNFT.svg";
 // // import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
-import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
-import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
+import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
+import ChildContract from "../../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
 const client = create("https://ipfs.infura.io:5001/api/v0");
 // import { writeJsonFile } from "write-json-file";
-import { BlockchainContext } from "../context/BlockchainContext.tsx";
+import { BlockchainContext } from "../../context/BlockchainContext.tsx";
 
 // let data = require("../data.json");
 
