@@ -10,7 +10,7 @@ function App() {
   const authorization = "Basic " + btoa(projectId + ":" + projectSecret);
   const [formData, setFormData] = React.useState({
     level: 2,
-    name: "heemank",
+    name: "utsav singla",
     creator: "verma jsdsdvbsDSHJSbjhb",
     desc: "bkjsdkj",
     time: new Date(),
@@ -34,6 +34,7 @@ function App() {
 
   // };
   const onSubmitHandler = async (data: String) => {
+    console.log(data);
     const result = await (ipfs as IPFSHTTPClient).add(data);
     console.log(result);
   };
@@ -46,7 +47,7 @@ function App() {
             <p>Upload File using IPFS</p>
             <button
               onClick={(e) => {
-                onSubmitHandler(formData.toString());
+                onSubmitHandler(JSON.stringify(formData));
               }}
             >
               Click to upload now
