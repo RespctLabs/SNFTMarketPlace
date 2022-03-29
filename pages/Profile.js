@@ -18,16 +18,40 @@ import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/
 import { BlockchainContext } from "../context/BlockchainContext.tsx";
 
 export default function Profile() {
-  const [NumberOfNFTs, setNumberOfNFTs] = React.useState(100);
+  const [NumberOfNFTs, setNumberOfNFTs] = React.useState(0);
   const [description, setDescription] = React.useState("2");
-  const [Nfts, setNfts] = React.useState([]);
   const { getProvider } = useContext(BlockchainContext);
 
-  async function getMintedNFTs(e) {
-    e.preventDefault();
+  useEffect(() => {
+    console.log("hello");
+    async function getM() {
+      const provider = await getProvider();
+      const signer = await provider?.getSigner();
+      console.log(signer, provider, " signer  provider");
 
+      let parentContract = new ethers.Contract(
+        ParentAddress,
+        ParentContract.abi,
+        signer
+      );
+
+      try {
+        let count = await parentContract.getComposableCount();
+        console.log("count", count);
+        setNumberOfNFTs(BigInt(count._hex).toString(10));
+        console.log("count", NumberOfNFTs);
+      } catch (err) {
+        console.log("count");
+      }
+
+      // getMintedNFTs();
+    }
+    getM();
+  });
+
+  async function getMintedNFTs() {
     const provider = await getProvider();
-    const signer = provider?.getSigner();
+    const signer = await provider?.getSigner();
 
     // calling smart contract on function getComposableCount
     let parentContract = new ethers.Contract(
@@ -69,7 +93,8 @@ export default function Profile() {
   }
 
   function generateNFTs(event) {
-    for (var i = 1; i <= NumberOfNFTs; i++) {
+    let Nfts = [];
+    for (var i = 0; i < NumberOfNFTs; i++) {
       Nfts.push(
         <Link href={"/nfts/" + i} passHref>
           <a>
@@ -157,7 +182,8 @@ export default function Profile() {
           <div>
             <button
               onClick={(e) => {
-                getMintedNFTs(e);
+                e.preventDefault();
+                getMintedNFTs();
               }}
               className="bg-OurBlack rounded-lg text-[#03AFD0] md:mx-6"
             >
