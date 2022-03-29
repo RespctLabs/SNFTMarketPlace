@@ -19,6 +19,8 @@ import { BlockchainContext } from "../../context/BlockchainContext";
 import { ParentAddress, ChildAddress } from "../../config";
 import { getAccountPath } from "ethers/lib/utils";
 
+const client = create("https://ipfs.infura.io:5001/api/v0");
+
 export default function Buy(props) {
   const [Hash, setHash] = React.useState(undefined);
   const [Buyer, setBuyer] = React.useState(undefined);
