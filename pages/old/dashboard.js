@@ -5,7 +5,7 @@ import Web3Modal from 'web3modal'
 
 import {
   marketplaceAddress
-} from '../config'
+} from '../../config'
 
 import NFTMarketplace from '../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json'
 

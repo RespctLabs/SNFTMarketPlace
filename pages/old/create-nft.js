@@ -1,20 +1,22 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { ethers } from "ethers";
 import { create } from "ipfs-http-client";
 import { useRouter } from "next/router";
-import Web3Modal from "web3modal";
 import web3 from "web3";
 import Image from "next/Image";
-import { ParentAddress } from "../config";
-import NFTImage from "../public/assets/svg/nftimage.svg";
+import { ParentAddress, ChildAddress } from "../../config";
+import NFTImage from "../../public/images/profileNFT.svg";
 // // import NFTMarketplace from "../artifacts/contracts/NFTMarketplace.sol/NFTMarketplace.json";
-import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
+import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
+import ChildContract from "../../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";
 const client = create("https://ipfs.infura.io:5001/api/v0");
 // import { writeJsonFile } from "write-json-file";
+import { BlockchainContext } from "../../context/BlockchainContext.tsx";
 
 // let data = require("../data.json");
 
 export default function CreateItem() {
+  const { getProvider } = useContext(BlockchainContext);
   const [basic, setBasic] = useState({
     image: NFTImage,
     name: "Azuki",
@@ -34,9 +36,7 @@ export default function CreateItem() {
   const router = useRouter();
 
   async function handleSubmit(event) {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
 
     event.preventDefault();
@@ -49,6 +49,7 @@ export default function CreateItem() {
     );
 
     console.log(signer, "signer");
+    console.log(signer.address);
 
     let count = await contract.getComposableCount();
 
@@ -81,7 +82,60 @@ export default function CreateItem() {
     console.log(tokenId, url);
     // await writeJsonFile(data, x);
   }
+  async function handleSetEngagement(e) {
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+    let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let t1 = await contract.mintEngagementPoints(
+      signer.getAddress(),
+      500,
+      "0x00"
+    );
+    const tx = await t1.wait();
+    console.log(tx, "tx");
+  }
+  async function handleUpgrade(e) {
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+    let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let parentcontract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+    // console.log(signer, "signer");
+    // let t1 = await contract.mintEngagementPoints(
+    //   "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+    //   500,
+    //   "0x00"
+    // );
+    // const tx = await t1.wait();
+    // console.log(tx, "tx");
+    let t1 = await parentcontract.getComposableCount();
+    let t2 = await contract.upgradeSNFT("0x01", 1, web3.utils.encodePacked(1), {
+      from: signer.getAddress(),
+    });
+    //.upgradeSNFT(composable1, multiTokenTier1, web3.utils.encodePacked(composable1),{from:user1});
+    const tx2 = await t2.wait();
+    console.log(tx2, "tx2");
+    // const transaction = await parentcontract.childBalance("0x01", contract.address, 1);
+    // const tx3 = await transaction.wait();
+    // console.log(tx3, "tx3");
 
+    // let transaction = await contract.mint({
+    //   from: signer.getAddress(),
+    //   value: web3.utils.toWei("2"),
+    // });
+    // console.log(transaction, "transaction");
+
+    // // let listingPrice = await contract.getListingPrice();
+    // // listingPrice = listingPrice.toString();
+    // // let transaction = await contract.createToken(url, price, {
+    // //   value: listingPrice,
+    // // });
+    // const tx = await transaction.wait();
+    // console.log(tx, "tx");
+  }
   async function onChange(e) {
     const file = e.target.files[0];
     try {
@@ -95,11 +149,39 @@ export default function CreateItem() {
     }
   }
 
+  async function handleLevelcheck() {
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+
+    let child = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+
+    /* next, create the item */
+    // const price = ethers.utils.parseUnits(formInput.price, "ether");
+    let contract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+    // console.log(signer, "signer");
+
+    //  assert.equal(await erc998.getLevel(composable1, erc1155.address),1);
+
+    let transaction = await contract.getLevel("0x01", child.address);
+
+    console.log(transaction, "transaction");
+
+    // let listingPrice = await contract.getListingPrice();
+    // listingPrice = listingPrice.toString();
+    // let transaction = await contract.createToken(url, price, {
+    //   value: listingPrice,
+    // });
+    // const tx = await transaction.wait();
+    // console.log(tx, "tx");
+  }
+
   async function listNFTForSale() {
     // const url = await uploadToIPFS();
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = await getProvider();
     const signer = provider.getSigner();
 
     /* next, create the item */
@@ -109,7 +191,6 @@ export default function CreateItem() {
       ParentContract.abi,
       signer
     );
-
     console.log(signer, "signer");
 
     let transaction = await contract.mint({
@@ -126,7 +207,7 @@ export default function CreateItem() {
     // });
     const tx = await transaction.wait();
     console.log(tx, "tx");
-    router.push("/");
+    // router.push("/");
   }
 
   return (
@@ -174,6 +255,24 @@ export default function CreateItem() {
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
         >
           get Composable
+        </button>
+        <button
+          onClick={handleSetEngagement}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          Set Engagement Point
+        </button>
+        <button
+          onClick={handleUpgrade}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          Upgrade
+        </button>
+        <button
+          onClick={handleLevelcheck}
+          className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"
+        >
+          get level
         </button>
       </div>
     </div>

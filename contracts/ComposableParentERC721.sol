@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+     hy// SPDX-License-Identifier: MIT
 
 pragma solidity ^0.6.0;
 
@@ -152,6 +152,19 @@ contract ComposableParentERC721 is
         payable(owner).transfer(msg.value);
 
         emit NFTMinted(ownerToComposableId[msg.sender]);
+    }
+
+    function getLevel(uint256 composableId,address childContract) public view returns (uint256) {
+        uint256 count = 0;
+        for (uint256 i=1; i< maxSupply; i++) {
+            if ( childBalance(composableId, childContract,i)==1) {
+                count +=1;
+            }
+            else{
+                break;
+            }
+        }
+        return count;
     }
 
     /**

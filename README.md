@@ -2,8 +2,8 @@
 
 ## Getting Started
 
-- npx hardhat node
-- npx hardhat run scripts/deploy.js --network localhost
+- yarn hardhat node
+- yarn hardhat run scripts/deploy.js --network localhost
 - change contract addresses in config.ts
 - yarn run dev
 - add localhost account from hardhat node to metamask.

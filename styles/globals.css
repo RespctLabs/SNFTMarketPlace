@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"), url(/fonts/Poppins-Bold.woff2) format("woff2");
+}
+.outline_title {
+  color: transparent;
+  font-size: 50px;
+  -webkit-text-stroke-width: 2px;
+  /* -webkit-text-stroke-color: linear-gradient(rgb(185, 13, 13), #333); */
+}
+
+.stroke {
+  -webkit-text-stroke: 0.1rem darkgrey;
+}
+
+.poppinsFont {
+  font-family: "Poppins", sans-serif;
+}
+
+.search {
+  position: relative;
+  display: inline-block;
+}
+
+.search input {
+  text-indent: 5px;
+  padding-right: 30px;
+}
+.inner {
+  position: absolute;
+  top: 0.4em;
+  left: 0.4em;
+}
+
+.headerDiv {
+  box-shadow: -4px -3px 10px 3px rgba(41, 41, 40, 1),
+    3px 4px 10px 3px rgba(0, 0, 0, 1);
+}
