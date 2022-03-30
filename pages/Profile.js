@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from "react";
-
 import Tity from "../components/Tity";
 import BannerPic from "../public/images/profilebanner.svg";
 import ProfileImage from "../public/images/profileImage.svg";
