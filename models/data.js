@@ -7,15 +7,15 @@ const DataSchema = new Schema({
         ref: 'User',
     },
     // change somethingA to proper name
-    somethingA: {
+    keyValue: {
         type: String,
     },
     // change somethingB to proper name
-    somethingB: {
+    tokenID: {
         type: String,
     },
     // change somethingC to proper name
-    somethingC: {
+    ipfsLink: {
         type: String,
     }
 });
