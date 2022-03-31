@@ -10,7 +10,7 @@ import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
 
 import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
-
+import { TwitterShareButton } from "react-share";
 import web3 from "web3";
 import { ethers, Signer } from "ethers";
 import ParentContract from "../../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
@@ -23,8 +23,15 @@ const client = create("https://ipfs.infura.io:5001/api/v0");
 
 export default function Buy(props) {
   const [Hash, setHash] = React.useState(undefined);
+  const [userName, setuserName] = React.useState(undefined);
+
   const [Buyer, setBuyer] = React.useState(undefined);
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
+
+  async function upgrade() {
+    console.log(userName);
+    console.log("upgrade");
+  }
 
   async function listNFTForSale() {
     const provider = await getProvider();
@@ -48,7 +55,6 @@ export default function Buy(props) {
 
     console.log(transaction, "transaction");
     console.log(transaction.to, "transaction");
-    setBuyer(transaction.to);
 
     // let listingPrice = await contract.getListingPrice();
     // listingPrice = listingPrice.toString();
@@ -60,6 +66,11 @@ export default function Buy(props) {
     console.log(tx.transactionHash, "tx");
     console.log(parseInt(BigInt(tx.events[1].args.tokenId._hex).toString(10)));
     setHash(tx.transactionHash);
+    console.log(tx.from, " tx from");
+
+    setBuyer(tx.from);
+    console.log(Buyer, " Buyer");
+    console.log(connectedAccount, " connected Account");
 
     // router.push("/");
   }
@@ -165,6 +176,7 @@ export default function Buy(props) {
           <div id="right" className="md:w-1/2 text-white md:py-12">
             <div className="w-2/3 md:w-1/2 mx-auto py-10 md:py-20">
               <p className="md:text-6xl flex ">Azuki NFT</p>
+
               <span className="flex md:pt-2  ">
                 <p>By &nbsp;</p>
                 <p className="text-OurBlue">Azuki</p>
@@ -191,11 +203,25 @@ export default function Buy(props) {
               <div className="flex flex-col space-y-5">
                 {Hash ? (
                   Buyer === connectedAccount ? (
-                    <PrimaryButton
-                      text="Upgrade"
-                      color="[#7834BF]"
-                      shadow="[#000000]"
-                    />
+                    <>
+                      <input
+                        type="text"
+                        value={userName}
+                        onChange={(e) => {
+                          setuserName(e.target.value);
+                        }}
+                      />
+
+                      <TwitterShareButton
+                        title={
+                          "gathering enagement points to level up my nft " +
+                          Hash
+                        }
+                        url={"@RespctClub"}
+                      >
+                        Tweet
+                      </TwitterShareButton>
+                    </>
                   ) : (
                     "here is an nft bough by someone else"
                   )
