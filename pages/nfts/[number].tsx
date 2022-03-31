@@ -190,13 +190,15 @@ export default function Buy(props) {
               <p className="text-white"> {Hash ? Hash : ""}</p>
               <div className="flex flex-col space-y-5">
                 {Hash ? (
-                  ""
-                ) : Buyer === connectedAccount ? (
-                  <PrimaryButton
-                    text="Upgrade"
-                    color="[#7834BF]"
-                    shadow="[#000000]"
-                  />
+                  Buyer === connectedAccount ? (
+                    <PrimaryButton
+                      text="Upgrade"
+                      color="[#7834BF]"
+                      shadow="[#000000]"
+                    />
+                  ) : (
+                    "here is an nft bough by someone else"
+                  )
                 ) : (
                   <PrimaryButton
                     onClick={(e) => {
