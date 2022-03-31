@@ -27,7 +27,8 @@ export default function Buy(props) {
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
 
   async function listNFTForSale() {
-    const provider = getProvider();
+    const provider = await getProvider();
+    console.log(provider, connectedAccount);
     const signer = provider.getSigner();
     // const url = await uploadToIPFS();
 
