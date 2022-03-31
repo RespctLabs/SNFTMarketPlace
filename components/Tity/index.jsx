@@ -21,7 +21,7 @@ export default function Tity(props) {
           <div>{props.InstagramCount}</div>
         </div>
       </Link>
-      <Link href={"https://www.twitch.tv/respct.club"} passHref>
+      <Link href={"https://discord.com/invite/dMNZ6S2dCz"} passHref>
         <div className="flex flex-col ">
           <Image src={Twitch} alt="Twitch" height={30} width={30} />
           <div>{props.TwitchCount}</div>

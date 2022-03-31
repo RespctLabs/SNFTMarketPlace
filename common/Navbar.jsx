@@ -3,6 +3,9 @@ import Web3Modal from "web3modal";
 import React, { Fragment, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { ethers } from "ethers";
+import Image from "next/image";
+import Profile from "../public/svg/profile.svg";
+
 import {
   AppContextProps,
   BlockchainContext,
@@ -33,67 +36,34 @@ const Navbar = (props) => {
   };
   return (
     <>
-      <div className=" px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="relative flex items-center justify-between h-16">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-            {/* Mobile menu button*/}
-          </div>
-          <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
-            <div className="flex items-center flex-shrink-0">
-              <Link href="/">
-                <img
-                  className="block w-8 h-8 cursor-pointer lg:hidden"
-                  src="/n-big.png"
-                  alt="N letter logo"
-                />
-              </Link>
-              <Link href="/">
-                <img
-                  className="hidden w-8 h-8 cursor-pointer lg:block"
-                  src="/n-big.png"
-                  alt="N letter logo"
-                />
-              </Link>
+      <div id="header" className="py-6 xl:pt-6 ">
+        <div className="vishnugaandu rounded-3xl mx-2 lg:mx-4 bg-OurBlack">
+          <div className="flex justify-between drop-shadow-2xl  text-white px-3">
+            <div className="my-1 xl:ml-5 xl:mt-2 "></div>
+            <div className="flex flex-col justify-center text-3xl">
+              <p className=" text-transparent bg-clip-text font-bold text-transparent  bg-clip-text bg-gradient-to-br from-[#03AFD0] via-[#812DC1] to-[#56109D] ">
+                respct
+              </p>
             </div>
-            <div className="hidden sm:block sm:ml-12">
-              <div className="flex space-x-12">
-                {navigation.map((item) => {
-                  if (item.name == "Create NFT") return;
-                  return (
-                    <Link key={item.name} href={item.href}>
-                      <div className="px-3 py-2 font-medium border-b-2 border-transparent cursor-pointer">
-                        {item.name}
-                      </div>
-                    </Link>
-                  );
-                })}
+            <div className=" flex my-3 xl:mr-2 xl:mt-4">
+              <div className="mx-2">
+                {connectedAccount ? (
+                  <div>
+                    {" "}
+                    <button
+                      onClick={() => disconnect()}
+                      className="block p-2 text-white "
+                    >
+                      {connectedAccount}
+                    </button>
+                  </div>
+                ) : (
+                  <button onClick={() => connectWallet(true)}>
+                    <Image src={Profile} alt="logo" />
+                  </button>
+                )}
               </div>
             </div>
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 space-x-4 font-medium sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <Link href="/createItem">
-              <button className="hidden font-medium md:block">
-                Create NFT
-              </button>
-            </Link>
-            {connectedAccount ? (
-              <div>
-                {" "}
-                <button
-                  onClick={() => disconnect()}
-                  className="block p-2 text-white "
-                >
-                  Disconnect
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => connectWallet(true)}
-                className="px-4 py-2 font-semibold transition border-2 rounded-full shadow-lg hover:border-primary hover:text-primary hover:shadow-primary/30 border-primary/80 text-primary/90 shadow-primary/10"
-              >
-                Connect Wallet
-              </button>
-            )}
           </div>
         </div>
       </div>
