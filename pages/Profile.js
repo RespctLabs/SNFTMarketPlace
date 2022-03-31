@@ -4,7 +4,7 @@ import BannerPic from "../public/images/profilebanner.svg";
 import ProfileImage from "../public/images/profileImage.svg";
 import Filter from "../public/svg/filter.svg";
 import { ethers } from "ethers";
-
+import Respct from "../public/images/respct.svg";
 import NFTCard from "../components/common/NftCard";
 import Image from "next/image";
 import Link from "next/link";
@@ -123,7 +123,7 @@ export default function Profile() {
   return (
     <div className=" container mx-auto mb-16">
       <div className="mx-4 md:mx-0">
-        <Image src={BannerPic} />
+        <Image src={Respct} />
       </div>
       <div className="flex justify-center ">
         <div className="md:absolute md:top-80">
@@ -161,7 +161,7 @@ export default function Profile() {
           />
         </div>
       </div>
-      <div className="flex justify-between mx-4 md:mx-0 md:pt-6">
+      {/* <div className="flex justify-between mx-4 md:mx-0 md:pt-6">
         <div className="flex space-x-5 md:space-x-0">
           <div>
             <button className="bg-OurBlack rounded-lg text-[#03AFD0] md:mr-6 md:ml-2">
@@ -196,7 +196,7 @@ export default function Profile() {
             <Image src={Filter} layout="fixed" />
           </button>
         </div>
-      </div>
+      </div> */}
       <div>{generateNFTs()}</div>
     </div>
   );
