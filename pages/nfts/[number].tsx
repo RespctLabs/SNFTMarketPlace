@@ -8,7 +8,6 @@ import VerticalAzuki from "../../public/images/verticalAzuki.svg";
 import Level3 from "../../public/images/level3.svg";
 import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
-
 import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 import { TwitterShareButton } from "react-share";
 import web3 from "web3";
@@ -18,6 +17,7 @@ import ChildContract from "../../artifacts/contracts/ComposableChildrenERC1155.s
 import { BlockchainContext } from "../../context/BlockchainContext";
 import { ParentAddress, ChildAddress } from "../../config";
 import { getAccountPath } from "ethers/lib/utils";
+import { checkValidity } from "../api/axios";
 
 const client = create("https://ipfs.infura.io:5001/api/v0");
 
@@ -112,6 +112,8 @@ export default function Buy(props) {
 
     const result = await (ipfs as IPFSHTTPClient).add(jsonObj);
   }
+
+  async function BackendCall() {}
 
   async function mintNFt() {
     // minting function here
@@ -218,6 +220,13 @@ export default function Buy(props) {
                           Hash
                         }
                         url={"@RespctClub"}
+                        onShareWindowClose={() => {
+                          let ans = checkValidity(
+                            "http://127.0.0.1:8000/",
+                            "get"
+                          );
+                          console.log(ans);
+                        }}
                       >
                         Tweet
                       </TwitterShareButton>

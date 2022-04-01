@@ -8,6 +8,7 @@ import Respct from "../public/images/respct.svg";
 import NFTCard from "../components/common/NftCard";
 import Image from "next/image";
 import Link from "next/link";
+import { TwitterShareButton } from "react-share";
 
 import { ParentAddress, ChildAddress } from "../config";
 
@@ -151,6 +152,13 @@ export default function Profile() {
           id="profileRight"
           className="my-3 md:my-0 mx-4 md:mx-0 md:w-2/5 md:pt-9 md:px-3"
         >
+          <TwitterShareButton
+            title={"gathering enagement points to level up my nft "}
+            url={"@RespctClub"}
+            onShareWindowClose={(e) => console.log("onShareWindowClose")}
+          >
+            Tweet
+          </TwitterShareButton>
           {/* <PrimaryButton /> */}
 
           <Tity
