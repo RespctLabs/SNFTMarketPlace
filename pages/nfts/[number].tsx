@@ -26,7 +26,7 @@ export default function Buy(props) {
   const [Owned, setOwned] = React.useState(false);
   const [Hash, setHash] = React.useState(undefined);
   const [userName, setuserName] = React.useState("");
-  const [getUpgraded, setgetUpgrade] = React.useState(true);
+  const [NFTlevel, setNFTlevel] = React.useState(0);
   const router = useRouter();
   const [pid, setpid] = React.useState(parseInt(router.query.number));
 
@@ -36,7 +36,44 @@ export default function Buy(props) {
   useEffect(() => {
     CheckOwnership();
     getM();
+    checkLevel();
   });
+
+  async function checkLevel() {
+    const provider = await getProvider();
+    const signer = await provider?.getSigner();
+    console.log(signer, provider, " signer  provider");
+
+    let parentContract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    try {
+      let count = await parentContract.getLevel(pid, ChildAddress);
+      console.log(count, "count");
+      let level = parseInt(BigInt(count._hex).toString(10));
+      console.log(level, "level");
+      setNFTlevel(level);
+
+      return level;
+
+      // if (pid > value) {
+      //   setOwned(false);
+      // } else {
+      //   setOwned(true);
+      // }
+      // else
+      // // compare the value with router id ,
+      // if router is greater than 1 then it is to be bought Owned(false)
+      // if routher is less than or equal to value then it is bought Owned(true)
+      // setOwned(value);
+    } catch (err) {
+      console.log("not count");
+      return -1;
+    }
+  }
 
   async function getM() {
     const provider = await getProvider();
@@ -67,25 +104,25 @@ export default function Buy(props) {
     }
   }
 
-  async function CheckLevel() {
-    const provider = await getProvider();
-    const signer = await provider?.getSigner();
-    console.log(signer, provider, " signer  provider");
+  // async function CheckLevel() {
+  //   const provider = await getProvider();
+  //   const signer = await provider?.getSigner();
+  //   console.log(signer, provider, " signer  provider");
 
-    let parentcontract = new ethers.Contract(
-      ParentAddress,
-      ParentContract.abi,
-      signer
-    );
+  //   let parentcontract = new ethers.Contract(
+  //     ParentAddress,
+  //     ParentContract.abi,
+  //     signer
+  //   );
 
-    try {
-      let t1 = await parentcontract.getLevel(connectedAccount);
-      let value = parseInt(BigInt(t1._hex).toString(10));
-      setBuyerof(value);
-    } catch (err) {
-      setBuyerof(0);
-    }
-  }
+  //   try {
+  //     let t1 = await parentcontract.getLevel(connectedAccount);
+  //     let value = parseInt(BigInt(t1._hex).toString(10));
+  //     setBuyerof(value);
+  //   } catch (err) {
+  //     setBuyerof(0);
+  //   }
+  // }
 
   async function CheckOwnership() {
     const provider = await getProvider();
@@ -108,7 +145,6 @@ export default function Buy(props) {
   }
 
   async function upgrade() {
-    console.log(userName);
     console.log("upgrade");
     const provider = await getProvider();
     const signer = provider.getSigner();
@@ -119,10 +155,15 @@ export default function Buy(props) {
       signer
     );
 
-    let t1 = await parentcontract.getComposableCount();
-    let t2 = await contract.upgradeSNFT("0x01", 1, web3.utils.encodePacked(1), {
-      from: signer.getAddress(),
-    });
+    let t1 = await contract.mintEngagementPoints(connectedAccount, 600, "0x00");
+    let t2 = await contract.upgradeSNFT(
+      "0x0" + pid.toString(),
+      1,
+      web3.utils.encodePacked(pid),
+      {
+        from: signer.getAddress(),
+      }
+    );
     const tx2 = await t2.wait();
     console.log(tx2, "tx2");
   }
@@ -313,45 +354,63 @@ export default function Buy(props) {
               <div className="flex flex-col space-y-5">
                 {Owned ? (
                   Buyerof === pid ? (
-                    <div>check for nft upgraded or not?</div>
+                    // check for nft upgradation if upgraded show congrats
+                    // if not show upgrade button
+
+                    NFTlevel === 0 ? (
+                      <>
+                        <input
+                          type="text"
+                          className="text-black indent-3"
+                          placeholder="your username"
+                          value={userName}
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setuserName(e.target.value);
+                          }}
+                        />
+                        <TwitterShareButton
+                          title={
+                            "gathering enagement points to level up my nft " +
+                            Hash
+                          }
+                          url={"@RespctClub"}
+                        >
+                          Tweet
+                        </TwitterShareButton>
+
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                          onClick={() => {
+                            console.log("share window closed");
+                            let ans = checkValidity(
+                              "http://127.0.0.1:8000/cyanblot",
+                              "get"
+                            );
+                            if (ans === " true") {
+                              setgetUpgrade(true);
+                            } else {
+                              setgetUpgrade(false);
+                            }
+                            console.log(ans, " answer");
+                          }}
+                        >
+                          Check
+                        </button>
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                          onClick={() => {
+                            upgrade();
+                          }}
+                        >
+                          Upgrade NFT
+                        </button>
+                      </>
+                    ) : (
+                      <div> NFT already upgraded </div>
+                    )
                   ) : (
-                    <>
-                      <input
-                        type="text"
-                        className="text-black indent-3"
-                        placeholder="your username"
-                        value={userName}
-                        onChange={(e) => {
-                          console.log(e.target.value);
-                          setuserName(e.target.value);
-                        }}
-                      />
-                      <TwitterShareButton
-                        title={
-                          "gathering enagement points to level up my nft " +
-                          Hash
-                        }
-                        url={"@RespctClub"}
-                      >
-                        Tweet
-                      </TwitterShareButton>
-
-                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                        onClick={() => {
-                          console.log("share window closed");
-                          let ans = checkValidity(
-                            "http://127.0.0.1:8000/cyanblot",
-                            "get"
-                          );
-
-                          // setgetUpgrade(ans);
-                          console.log(ans);
-                        }}
-                      >
-                        Check
-                      </button>
-                    </>
+                    <div> Here is an NFT bought by someone else </div>
                   )
                 ) : Buyerof > 0 ? (
                   <div> already owned nft, on read only mode </div>
