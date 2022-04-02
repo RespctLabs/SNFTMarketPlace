@@ -315,7 +315,43 @@ export default function Buy(props) {
                   Buyerof === pid ? (
                     <div>check for nft upgraded or not?</div>
                   ) : (
-                    <div>here is an nft owned by someone else</div>
+                    <>
+                      <input
+                        type="text"
+                        className="text-black indent-3"
+                        placeholder="your username"
+                        value={userName}
+                        onChange={(e) => {
+                          console.log(e.target.value);
+                          setuserName(e.target.value);
+                        }}
+                      />
+                      <TwitterShareButton
+                        title={
+                          "gathering enagement points to level up my nft " +
+                          Hash
+                        }
+                        url={"@RespctClub"}
+                      >
+                        Tweet
+                      </TwitterShareButton>
+
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                        onClick={() => {
+                          console.log("share window closed");
+                          let ans = checkValidity(
+                            "http://127.0.0.1:8000/cyanblot",
+                            "get"
+                          );
+
+                          // setgetUpgrade(ans);
+                          console.log(ans);
+                        }}
+                      >
+                        Check
+                      </button>
+                    </>
                   )
                 ) : Buyerof > 0 ? (
                   <div> already owned nft, on read only mode </div>
