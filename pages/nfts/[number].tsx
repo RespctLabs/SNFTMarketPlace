@@ -320,7 +320,17 @@ export default function Buy(props) {
                 ) : Buyerof > 0 ? (
                   <div> already owned nft, on read only mode </div>
                 ) : (
-                  <div> buy button </div>
+                  <div>
+                    <PrimaryButton
+                      onClick={(e) => {
+                        e.preventDefault();
+                        listNFTForSale();
+                      }}
+                      text="Buy"
+                      color="[#03AFD0]"
+                      shadow="[#45ABD6]"
+                    />{" "}
+                  </div>
                 )}
 
                 {/* {Owned ? (
