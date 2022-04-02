@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { TwitterShareButton } from "react-share";
 
-import { ParentAddress, ChildAddress } from "../config";
+// import { ParentAddress, ChildAddress } from "../config";
 
 import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
 import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/ComposableChildrenERC1155.json";

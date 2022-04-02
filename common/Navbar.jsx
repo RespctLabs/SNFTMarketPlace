@@ -4,7 +4,7 @@ import React, { Fragment, useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { ethers } from "ethers";
 import Image from "next/image";
-import Profile from "../public/svg/profile.svg";
+import Profile from "../public/svg/Profile.svg";
 
 import {
   AppContextProps,
