@@ -94,7 +94,7 @@ export default function Profile() {
 
   function generateNFTs(event) {
     let Nfts = [];
-    for (var i = 0; i < NumberOfNFTs; i++) {
+    for (var i = 1; i <= NumberOfNFTs; i++) {
       Nfts.push(
         <Link href={"/nfts/" + i} passHref>
           <a>

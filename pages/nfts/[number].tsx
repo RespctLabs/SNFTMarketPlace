@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import BuyNFT from "../../public/images/buyNft.svg";
 import Image from "next/image";
 import Polygon from "../../public/svg/polygon.svg";
@@ -18,19 +18,113 @@ import { BlockchainContext } from "../../context/BlockchainContext";
 import { ParentAddress, ChildAddress } from "../../config";
 import { getAccountPath } from "ethers/lib/utils";
 import { checkValidity } from "../api/axios";
+import { useRouter } from "next/router";
 
 const client = create("https://ipfs.infura.io:5001/api/v0");
 
 export default function Buy(props) {
+  const [Owned, setOwned] = React.useState(false);
   const [Hash, setHash] = React.useState(undefined);
-  const [userName, setuserName] = React.useState(undefined);
+  const [userName, setuserName] = React.useState("");
+  const [getUpgraded, setgetUpgrade] = React.useState(true);
+  const router = useRouter();
+  const [pid, setpid] = React.useState(parseInt(router.query.number));
 
-  const [Buyer, setBuyer] = React.useState(undefined);
+  const [Buyerof, setBuyerof] = React.useState(0);
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
+
+  useEffect(() => {
+    CheckOwnership();
+    getM();
+  });
+
+  async function getM() {
+    const provider = await getProvider();
+    const signer = await provider?.getSigner();
+    console.log(signer, provider, " signer  provider");
+
+    let parentContract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    try {
+      let count = await parentContract.getComposableCount();
+      let value = parseInt(BigInt(count._hex).toString(10));
+      if (pid > value) {
+        setOwned(false);
+      } else {
+        setOwned(true);
+      }
+      // else
+      // // compare the value with router id ,
+      // if router is greater than 1 then it is to be bought Owned(false)
+      // if routher is less than or equal to value then it is bought Owned(true)
+      // setOwned(value);
+    } catch (err) {
+      console.log("count");
+    }
+  }
+
+  async function CheckLevel() {
+    const provider = await getProvider();
+    const signer = await provider?.getSigner();
+    console.log(signer, provider, " signer  provider");
+
+    let parentcontract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    try {
+      let t1 = await parentcontract.getLevel(connectedAccount);
+      let value = parseInt(BigInt(t1._hex).toString(10));
+      setBuyerof(value);
+    } catch (err) {
+      setBuyerof(0);
+    }
+  }
+
+  async function CheckOwnership() {
+    const provider = await getProvider();
+    const signer = await provider?.getSigner();
+    console.log(signer, provider, " signer  provider");
+
+    let parentcontract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    try {
+      let t1 = await parentcontract.getComposableId(connectedAccount);
+      let value = parseInt(BigInt(t1._hex).toString(10));
+      setBuyerof(value);
+    } catch (err) {
+      setBuyerof(0);
+    }
+  }
 
   async function upgrade() {
     console.log(userName);
     console.log("upgrade");
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+    let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let parentcontract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    let t1 = await parentcontract.getComposableCount();
+    let t2 = await contract.upgradeSNFT("0x01", 1, web3.utils.encodePacked(1), {
+      from: signer.getAddress(),
+    });
+    const tx2 = await t2.wait();
+    console.log(tx2, "tx2");
   }
 
   async function listNFTForSale() {
@@ -68,8 +162,8 @@ export default function Buy(props) {
     setHash(tx.transactionHash);
     console.log(tx.from, " tx from");
 
-    setBuyer(tx.from);
-    console.log(Buyer, " Buyer");
+    setBuyerof(tx.from);
+    console.log(Buyerof, " Buyer");
     console.log(connectedAccount, " connected Account");
 
     // router.push("/");
@@ -140,6 +234,8 @@ export default function Buy(props) {
     const tx = await transaction.wait();
     console.log(tx, "tx");
   }
+  console.log(pid, "pid");
+
   return (
     <>
       <div className="container md:mx-auto  ">
@@ -200,37 +296,87 @@ export default function Buy(props) {
                     {props.priceDollar ? "$" + props.priceDollar : "$3,618.36"}
                   </div>
                 </div>
+                <TwitterShareButton
+                  title={
+                    "gathering enagement points to level up my nft " + Hash
+                  }
+                  url={"@RespctClub"}
+                  onShareWindowClose={() => {
+                    console.log("share window closed");
+                  }}
+                >
+                  Tweet
+                </TwitterShareButton>
               </div>
+
               <p className="text-white"> {Hash ? Hash : ""}</p>
               <div className="flex flex-col space-y-5">
-                {Hash ? (
-                  Buyer === connectedAccount ? (
-                    <>
-                      <input
-                        type="text"
-                        value={userName}
-                        onChange={(e) => {
-                          setuserName(e.target.value);
-                        }}
-                      />
+                {Owned ? (
+                  Buyerof === pid ? (
+                    <div>check for nft upgraded or not?</div>
+                  ) : (
+                    <div>here is an nft owned by someone else</div>
+                  )
+                ) : Buyerof > 0 ? (
+                  <div> already owned nft, on read only mode </div>
+                ) : (
+                  <div> buy button </div>
+                )}
 
-                      <TwitterShareButton
-                        title={
-                          "gathering enagement points to level up my nft " +
-                          Hash
-                        }
-                        url={"@RespctClub"}
-                        onShareWindowClose={() => {
-                          let ans = checkValidity(
-                            "http://127.0.0.1:8000/",
-                            "get"
-                          );
-                          console.log(ans);
+                {/* {Owned ? (
+                  Owned === true ? (
+                    getUpgraded === true ? (
+                      <>
+                        <input
+                          type="text"
+                          className="text-black"
+                          value={userName}
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                            setuserName(e.target.value);
+                          }}
+                        />
+                        <TwitterShareButton
+                          title={
+                            "gathering enagement points to level up my nft " +
+                            Hash
+                          }
+                          url={"@RespctClub"}
+                        >
+                          Tweet
+                        </TwitterShareButton>
+
+                        <button
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                          onClick={() => {
+                            console.log("share window closed");
+                            let ans = checkValidity(
+                              "http://127.0.0.1:8000/HeemankVerma",
+                              "get"
+                            );
+
+                            // setgetUpgrade(ans);
+                            console.log(ans);
+                            console.timeLog(
+                              "cyanblot has tweeted about Respct.club"
+                            );
+                          }}
+                        >
+                          Check
+                        </button>
+                      </>
+                    ) : (
+                      <PrimaryButton
+                        onClick={(e) => {
+                          e.preventDefault();
+                          console.log("upgrade called");
+                          upgrade();
                         }}
-                      >
-                        Tweet
-                      </TwitterShareButton>
-                    </>
+                        text="Upgrade"
+                        color="[#03AFD0]"
+                        shadow="[#45ABD6]"
+                      />
+                    )
                   ) : (
                     "here is an nft bough by someone else"
                   )
@@ -244,7 +390,7 @@ export default function Buy(props) {
                     color="[#03AFD0]"
                     shadow="[#45ABD6]"
                   />
-                )}
+                )} */}
               </div>
             </div>
           </div>
