@@ -26,9 +26,10 @@ import { useRouter } from "next/router";
 function Buy(props) {
   const [Owned, setOwned] = React.useState(false);
   const [Checked, setChecked] = React.useState(false);
+  const [Hash1, setHash1] = React.useState(undefined);
 
   const [Hash, setHash] = React.useState(undefined);
-  const [userName, setuserName] = React.useState("mysteriousmystery");
+  const [userName, setuserName] = React.useState("HeemankVerma");
   const [NFTlevel, setNFTlevel] = React.useState(0);
   const router = useRouter();
   const [pid, setpid] = React.useState(parseInt(router.query.number as string));
@@ -41,6 +42,30 @@ function Buy(props) {
     getM();
     checkLevel();
   });
+
+  function tellbackend() {
+    axios({
+      headers: {
+        // need to resolve cross origin
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      },
+      method: "get",
+      url: "https://respctbot.herokuapp.com/setclaimed/" + connectedAccount,
+    })
+      .then((response) => {
+        console.log(response);
+        console.log(response.data.status);
+
+        if (response.data.status === 200) {
+          console.log("confirmed");
+          setChecked(response.data.value);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   async function checkLevel() {
     const provider = await getProvider();
@@ -149,6 +174,10 @@ function Buy(props) {
 
     let t1 = await contract.mintEngagementPoints(connectedAccount, 600, "0x00");
     console.log(t1, " t1");
+    if (t1.hash !== undefined) {
+      setHash1(t1.hash1);
+      tellbackend();
+    }
   }
 
   async function upgrade() {
@@ -321,6 +350,9 @@ function Buy(props) {
           <div id="right" className="md:w-1/3 text-white md:py-12">
             <div className="mx-auto py-10 md:py-20 mx-5 md:mx-0">
               <p className="text-2xl md:text-6xl flex ">Meta Bunny</p>
+              <p className="text-2xl md:text-3xl flex ">
+                Level &nbsp;{NFTlevel}
+              </p>
 
               <span className="flex md:pt-2  ">
                 <p>By &nbsp;</p>
@@ -366,7 +398,7 @@ function Buy(props) {
                         />
                         <TwitterShareButton
                           title={
-                            "gathering enagement points to level up my nft " +
+                            "Gathering engagement points to level up my NFT!  " +
                             Hash +
                             " " +
                             connectedAccount
@@ -409,9 +441,6 @@ function Buy(props) {
                                 if (response.data.status === 1) {
                                   console.log("getting engagement points");
                                   getEngagementPoints();
-                                  console.log(
-                                    "heemankverma has tweeted about Respct.club, he can now be allowed to upgrade his nft"
-                                  );
                                 }
                                 setChecked(response.data.value);
                               })
@@ -533,6 +562,51 @@ function Buy(props) {
         </div>
         <div className="my-10">
           <p className="text-center mx-5">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              onClick={() => {
+                console.log("share window ");
+                // let ans = checkValidity(
+                //   "http://127.0.0.1:8000/HeemankVerma",
+                //   "get"
+                // );
+                axios({
+                  headers: {
+                    // need to resolve cross origin
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type": "application/json",
+                  },
+                  method: "get",
+                  url:
+                    "https://respctbot.herokuapp.com/username/" +
+                    userName +
+                    "/" +
+                    connectedAccount,
+                  // "http://127.0.0.1:8000/" +
+                  // connectedAccount +
+                  // "/" +
+                  // userName,
+                })
+                  .then((response) => {
+                    console.log(response);
+                    console.log(response.data);
+
+                    if (response.data.status === 1) {
+                      console.log("getting engagement points");
+                      getEngagementPoints();
+                      console.log(
+                        "heemankverma has tweeted about Respct.club, he can now be allowed to upgrade his nft"
+                      );
+                    }
+                    setChecked(response.data.value);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }}
+            >
+              Check
+            </button>
             Knock Knock, Neo.... Follow the MetaBunny in its odyssey.” An
             odyssey of knowledge and wealth. Unlike other NFT collections,
             MetaBunny from respct.club is collected over time by attending
