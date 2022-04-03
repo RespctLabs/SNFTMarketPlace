@@ -177,7 +177,7 @@ function Buy(props) {
 
     let transaction = await contract.mint({
       from: signer.getAddress(),
-      value: web3.utils.toWei("2"),
+      value: web3.utils.toWei("1"),
     });
 
     console.log(transaction, "transaction");
