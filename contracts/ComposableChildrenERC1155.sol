@@ -6,13 +6,15 @@ pragma solidity ^0.6.0;
 /// @author respect-club
 /// @notice receives Engagement tokens and attaches tier to composable ERC998
 /// @dev this contract maintains engagement tokens at id 0,
-
+import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@openzeppelin/contracts/presets/ERC1155PresetMinterPauser.sol";
 // import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Holder.sol";
 import "./ComposableParentERC721.sol";
 
-contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
+contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser,
+ChainlinkClient
+{
     using SafeMath for uint256;
     bytes4 internal constant ERC1155_ACCEPTED = 0xf23a6e61; // bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))
     bytes4 internal constant ERC1155_BATCH_ACCEPTED = 0xbc197c81; // bytes4(keccak256("onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)"))
@@ -27,6 +29,24 @@ contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
     /// @notice csnft contract is deployed and linked to ERC1155TUMP
     /// @param _csnftContractAdr deployed csnft contract
 
+
+    using SafeMath for uint256;
+    using Chainlink for Chainlink.Request;
+
+    uint256 public requestBool; //twitter engagement check
+
+    address private oracle;
+    bytes32 private jobId;
+    uint256 private fee;
+
+    /**
+     * Network: Matic(mumbai)
+     * Oracle: 0x6070af2dFcaE4867f01d1B82782F5aF2EB27C0fC (Chainlink Devrel
+     * Node)
+     * Job ID: d5270d1c311941d0b08bead21fea7747 //>>default change
+     * Fee: 0.1 LINK
+     */
+
     constructor(string memory tierUri, address _csnftContractAdr)
         public
         ERC1155PresetMinterPauser(tierUri)
@@ -39,6 +59,12 @@ contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
         csnftContract = ComposableParentERC721(
             _csnftContractAdr
         );
+
+        setPublicChainlinkToken();
+        oracle = 0x6070af2dFcaE4867f01d1B82782F5aF2EB27C0fC;
+        jobId = "c79dbc25e0244558ba9ef979f17e1b9a"; //default change
+        fee = 0.1 * 10**18; // (Varies by network and job)
+
     }
 
     function getLatestTierId(address _to) public returns (uint256) {
@@ -66,13 +92,20 @@ contract ComposableChildrenERC1155 is ERC1155PresetMinterPauser {
         address _to,
         uint256 _amount,
         bytes memory _data
-    ) public {
-        // require(
-        //     hasRole(MINTER_ROLE, _msgSender()),
-        //     "ERC1155TUMP unauthorized engagement minter"
-        // );
+    ) public  returns (bytes32 requestId) {
+        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
 
+        request.add("", ""); // hardcoded :20000574 Chainlink nodes 1.0.0 and later support this format
+        // Sends the request
+        //return sendChainlinkRequestTo(oracle, request, fee);
+
+//if request true  >>another fn
         _mint(_to, 0, _amount, _data);
+
+    }
+    function fulfill(bytes32 _requestId, uint256 _requestBool) public recordChainlinkFulfillment(_requestId)
+    {
+        requestBool = _requestBool;
     }
 
     /// @notice upgrade user tier
