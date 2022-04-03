@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import BuyNFT from "../../public/images/buyNft.svg";
 import Image from "next/image";
 import Polygon from "../../public/svg/polygon.svg";
+import axios from "axios";
+
 import PrimaryButton from "../../components/common/PrimaryButton";
 import ProfileImage from "../../public/images/profileImage.svg";
 import VerticalAzuki from "../../public/images/verticalAzuki.svg";
@@ -24,8 +26,10 @@ const client = create("https://ipfs.infura.io:5001/api/v0");
 
 export default function Buy(props) {
   const [Owned, setOwned] = React.useState(false);
+  const [Checked, setChecked] = React.useState(false);
+
   const [Hash, setHash] = React.useState(undefined);
-  const [userName, setuserName] = React.useState("");
+  const [userName, setuserName] = React.useState("mysteriousmystery");
   const [NFTlevel, setNFTlevel] = React.useState(0);
   const router = useRouter();
   const [pid, setpid] = React.useState(parseInt(router.query.number));
@@ -58,17 +62,6 @@ export default function Buy(props) {
       setNFTlevel(level);
 
       return level;
-
-      // if (pid > value) {
-      //   setOwned(false);
-      // } else {
-      //   setOwned(true);
-      // }
-      // else
-      // // compare the value with router id ,
-      // if router is greater than 1 then it is to be bought Owned(false)
-      // if routher is less than or equal to value then it is bought Owned(true)
-      // setOwned(value);
     } catch (err) {
       console.log("not count");
       return -1;
@@ -375,6 +368,7 @@ export default function Buy(props) {
                             Hash
                           }
                           url={"@RespctClub"}
+                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                         >
                           Tweet
                         </TwitterShareButton>
@@ -382,29 +376,51 @@ export default function Buy(props) {
                         <button
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                           onClick={() => {
-                            console.log("share window closed");
-                            let ans = checkValidity(
-                              "http://127.0.0.1:8000/cyanblot",
-                              "get"
-                            );
-                            if (ans === " true") {
-                              setgetUpgrade(true);
-                            } else {
-                              setgetUpgrade(false);
-                            }
-                            console.log(ans, " answer");
+                            console.log("share window ");
+                            // let ans = checkValidity(
+                            //   "http://127.0.0.1:8000/HeemankVerma",
+                            //   "get"
+                            // );
+                            axios({
+                              headers: {
+                                // need to resolve cross origin
+                                "Access-Control-Allow-Origin": "*",
+                                "Content-Type": "application/json",
+                              },
+                              method: "get",
+                              url: "http://127.0.0.1:8000/" + userName,
+                            })
+                              .then((response) => {
+                                console.log(response);
+                                console.log(response.data);
+
+                                if (response.data.value) {
+                                  console.log(
+                                    "heemankverma has tweeted about Respct.club, he can now be allowed to upgrade his nft"
+                                  );
+                                }
+                                setChecked(response.data.value);
+                              })
+                              .catch((error) => {
+                                console.log(error);
+                              });
                           }}
                         >
                           Check
                         </button>
-                        <button
-                          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                          onClick={() => {
-                            upgrade();
-                          }}
-                        >
-                          Upgrade NFT
-                        </button>
+
+                        {Checked ? (
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                            onClick={() => {
+                              upgrade();
+                            }}
+                          >
+                            Upgrade NFT
+                          </button>
+                        ) : (
+                          " "
+                        )}
                       </>
                     ) : (
                       <div> NFT already upgraded </div>
