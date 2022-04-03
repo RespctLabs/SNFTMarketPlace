@@ -34,7 +34,7 @@ contract ComposableParentERC721 is
 
     uint256 composableCount;
     uint256 public maxSupply = 100;
-    uint256 public mintCost = 2 ether;
+    uint256 public mintCost = 1 ether;
 
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
