@@ -24,7 +24,7 @@ import { useRouter } from "next/router";
 
 const client = create("https://ipfs.infura.io:5001/api/v0");
 
-export default function Buy(props) {
+function Buy(props) {
   const [Owned, setOwned] = React.useState(false);
   const [Checked, setChecked] = React.useState(false);
 
@@ -569,3 +569,6 @@ export default function Buy(props) {
     </>
   );
 }
+
+Buy.layout = "L1";
+export default Buy;
