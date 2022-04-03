@@ -511,7 +511,7 @@ function Buy(props) {
           </div>
           <div></div>
         </div>
-        <div>
+        <div className="my-10">
           <p className="text-center mx-5">
             Knock Knock, Neo.... Follow the MetaBunny in its odyssey.” An
             odyssey of knowledge and wealth. Unlike other NFT collections,

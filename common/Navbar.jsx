@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ethers } from "ethers";
 import Image from "next/image";
 import Profile from "../public/svg/Profile.svg";
+import RespctHeader from "../public/svg/respctHeader.svg";
 
 import {
   AppContextProps,
@@ -41,9 +42,7 @@ const Navbar = (props) => {
           <div className="flex justify-between drop-shadow-2xl  text-white px-3">
             <div className="my-1 xl:ml-5 xl:mt-2 "></div>
             <div className="flex flex-col justify-center text-3xl">
-              <p className="text-transparent bg-clip-text font-semibold bg-gradient-to-r from-[#03AFD0] via-[#812DC1] to-[#56109D]">
-                respct
-              </p>
+              <Image src={RespctHeader} width={93} height={28} />
             </div>
             <div className=" flex my-3 xl:mr-2 xl:mt-4">
               <div className="mx-2">
