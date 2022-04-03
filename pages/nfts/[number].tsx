@@ -357,23 +357,6 @@ export default function Buy(props) {
 
                             <p className="text-white"> {Hash ? Hash : ""}</p>
                             <div className="flex flex-col space-y-5">
-                                <div className="flex justify-center">
-                                    <TwitterShareButton
-                                        title={
-                                            "gathering enagement points to level up my nft " +
-                                            Hash +
-                                            " " +
-                                            connectedAccount
-                                        }
-                                        url={"@RespctClub"}
-                                        onShareWindowClose={() => {
-                                            console.log("share window closed");
-                                        }}
-                                        className="font-bold"
-                                    >
-                                        Tweet
-                                    </TwitterShareButton>
-                                </div>
                                 {Owned ? (
                                     Buyerof === pid ? (
                                         // check for nft upgradation if upgraded show congrats
