@@ -486,7 +486,10 @@ function Buy(props) {
                                 ) : (
                                     <div className="flex justify-center">
                                         <button
-                                            onClick={props.onClick}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                listNFTForSale();
+                                              }}
                                             className="bg-[#03AFD0] rounded-md shadow-md shadow-[#45ABD6]"
                                         >
                                             <div className="text-white font-bold px-12 py-1">
