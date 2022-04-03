@@ -10,7 +10,6 @@ import VerticalAzuki from "../../public/images/verticalAzuki.svg";
 import Level3 from "../../public/images/level3.svg";
 import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
-import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 import { TwitterShareButton } from "react-share";
 import web3 from "web3";
 import { ethers, Signer } from "ethers";
@@ -22,7 +21,7 @@ import { getAccountPath } from "ethers/lib/utils";
 import { checkValidity } from "../api/axios";
 import { useRouter } from "next/router";
 
-const client = create("https://ipfs.infura.io:5001/api/v0");
+// const client = create("https://ipfs.infura.io:5001/api/v0");
 
 
 export default function Buy(props) {
@@ -169,6 +168,7 @@ export default function Buy(props) {
         const tx2 = await t2.wait();
         console.log(tx2, "tx2");
     }
+
 
     async function listNFTForSale() {
         const provider = await getProvider();

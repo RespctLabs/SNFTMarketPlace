@@ -6,7 +6,7 @@ function HomePage() {
     <div>
       <div>Welcome to respct</div>
       <Link href="/Profile" passHref>
-        <div>Go to Respct's profile</div>
+        <div>Go to Respct&apos;s profile</div>
       </Link>
       <Link href="/Login" passHref>
         <div>Go to Login Page</div>
@@ -14,5 +14,5 @@ function HomePage() {
     </div>
   );
 }
-
+HomePage.layout = "L1";
 export default HomePage;
