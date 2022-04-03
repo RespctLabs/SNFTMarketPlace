@@ -62,4 +62,5 @@ const Login = () => {
   );
 };
 
+Login.layout = "L2";
 export default Login;
