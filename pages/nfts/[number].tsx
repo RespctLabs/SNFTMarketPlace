@@ -378,11 +378,11 @@ function Buy(props) {
                                 "Content-Type": "application/json",
                               },
                               method: "get",
-                              url:
-                                "http://127.0.0.1:8000/" +
-                                connectedAccount +
-                                "/" +
-                                userName,
+                              url: "https://respctbot.herokuapp.com/username/{userName}/{connectedAddress}",
+                              // "http://127.0.0.1:8000/" +
+                              // connectedAccount +
+                              // "/" +
+                              // userName,
                             })
                               .then((response) => {
                                 console.log(response);
