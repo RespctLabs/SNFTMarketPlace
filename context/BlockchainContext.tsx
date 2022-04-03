@@ -70,7 +70,7 @@ export const BlockchainProvider = ({ children }: Props) => {
 
   useEffect(() => {
     checkIsWalletConnected();
-  }, []);
+  }, [checkIsWalletConnected]);
 
   return (
     <BlockchainContext.Provider
