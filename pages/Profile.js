@@ -111,11 +111,11 @@ export default function Profile() {
                             MINT your own NFT
                         </div>
                         <div className="flex justify-between text-white mx-3">
-                            <p className="font-semibold">Name</p>
-                            <p className="text-OurGreen">Level 0</p>
+                            <p className="font-semibold">Respct NFT</p>
+                            <p className="text-OurGreen">Level sNFT</p>
                         </div>
                         <div className="flex justify-end text-white mx-3">
-                            <p className="text-OurPurple">Top Bid 0</p>
+                            {/* <p className="text-OurPurple">Top Bid 0</p> */}
                         </div>
                     </div>
                 </a>
@@ -159,7 +159,7 @@ export default function Profile() {
                     id="profileRight"
                     className="my-3 md:my-0 mx-4 md:mx-0 md:w-2/5 md:pt-9 md:px-3"
                 >
-                    <TwitterShareButton
+                    {/* <TwitterShareButton
                         title={"gathering enagement points to level up my nft "}
                         url={"@RespctClub"}
                         onShareWindowClose={(e) =>
@@ -167,14 +167,10 @@ export default function Profile() {
                         }
                     >
                         Tweet
-                    </TwitterShareButton>
+                    </TwitterShareButton> */}
                     {/* <PrimaryButton /> */}
 
                     <Tity
-                        InstagramCount={"2.3K"}
-                        TwitchCount={"2.3K"}
-                        YoutubeCount={"2.3K"}
-                        TwitterCount={"2.3K"}
                     />
                 </div>
             </div>
