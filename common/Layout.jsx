@@ -32,11 +32,8 @@ const Layout = (props) => {
     );
   } else {
     return (
-      <div className="h-screen bg-OurBlack">
-        <div className=" text-center  text-white text-3xl">
-          Proceeding to Login Page{" "}
-        </div>
-
+      <div>
+        Proceeding to Login Page{" "}
         {() => {
           if (connectedAccount) {
             router.push("/Profile");
