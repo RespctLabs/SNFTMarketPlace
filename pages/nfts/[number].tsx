@@ -136,6 +136,21 @@ function Buy(props) {
     }
   }
 
+  async function getEngagementPoints() {
+    console.log("mint");
+    const provider = await getProvider();
+    const signer = provider.getSigner();
+    let contract = new ethers.Contract(ChildAddress, ChildContract.abi, signer);
+    let parentcontract = new ethers.Contract(
+      ParentAddress,
+      ParentContract.abi,
+      signer
+    );
+
+    let t1 = await contract.mintEngagementPoints(connectedAccount, 600, "0x00");
+    console.log(t1, " t1");
+  }
+
   async function upgrade() {
     console.log("upgrade");
     const provider = await getProvider();
@@ -147,7 +162,6 @@ function Buy(props) {
       signer
     );
 
-    let t1 = await contract.mintEngagementPoints(connectedAccount, 600, "0x00");
     let t2 = await contract.upgradeSNFT(
       "0x0" + pid.toString(),
       1,
