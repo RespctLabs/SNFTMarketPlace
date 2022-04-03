@@ -10,7 +10,6 @@ import VerticalAzuki from "../../public/images/verticalAzuki.svg";
 import Level3 from "../../public/images/level3.svg";
 import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
-import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 import { TwitterShareButton } from "react-share";
 import web3 from "web3";
 import { ethers, Signer } from "ethers";
@@ -203,15 +202,15 @@ function Buy(props) {
     // router.push("/");
   }
 
-  const projectId = "...";
-  const projectSecret = "...";
-  const ipfs = create({
-    host: "ipfs.infura.io",
-    port: 5001,
-    protocol: "https",
-  });
-  const auth =
-    "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+  // const projectId = "...";
+  // const projectSecret = "...";
+  // const ipfs = create({
+  //   host: "ipfs.infura.io",
+  //   port: 5001,
+  //   protocol: "https",
+  // });
+  // const auth =
+  //   "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
 
   // TODO:useeffect #1 that calls getComposibleCount and checks if route is valid
 
@@ -224,22 +223,22 @@ function Buy(props) {
   //   console.error("IPFS error ", error);
   //   ipfs = undefined;
   // }
-  const client = create({
-    host: "ipfs.infura.io",
-    port: 5001,
-    protocol: "https",
-    apiPath: "/api/v0/",
-    headers: {
-      authorization: auth,
-    },
-  });
-  async function makeipfsURL() {
-    const json = { level: 0 };
-    // upload files
-    let jsonObj = JSON.stringify(json);
+  // const client = create({
+  //   host: "ipfs.infura.io",
+  //   port: 5001,
+  //   protocol: "https",
+  //   apiPath: "/api/v0/",
+  //   headers: {
+  //     authorization: auth,
+  //   },
+  // });
+  // async function makeipfsURL() {
+  //   const json = { level: 0 };
+  //   // upload files
+  //   let jsonObj = JSON.stringify(json);
 
-    const result = await (ipfs as IPFSHTTPClient).add(jsonObj);
-  }
+  //   const result = await (ipfs as IPFSHTTPClient).add(jsonObj);
+  // }
 
   async function BackendCall() {}
 
