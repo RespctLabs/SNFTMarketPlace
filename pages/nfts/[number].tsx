@@ -22,7 +22,7 @@ import { getAccountPath } from "ethers/lib/utils";
 import { checkValidity } from "../api/axios";
 import { useRouter } from "next/router";
 
-const client = create("https://ipfs.infura.io:5001/api/v0");
+// const client = create("https://ipfs.infura.io:5001/api/v0");
 
 function Buy(props) {
   const [Owned, setOwned] = React.useState(false);
@@ -32,7 +32,7 @@ function Buy(props) {
   const [userName, setuserName] = React.useState("mysteriousmystery");
   const [NFTlevel, setNFTlevel] = React.useState(0);
   const router = useRouter();
-  const [pid, setpid] = React.useState(parseInt(router.query.number));
+  const [pid, setpid] = React.useState(parseInt(router.query.number as string));
 
   const [Buyerof, setBuyerof] = React.useState(0);
   const { getProvider, connectedAccount } = useContext(BlockchainContext);

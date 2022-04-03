@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import {
   AppContextProps,
   BlockchainContext,
-} from "../context/BlockchainContext.tsx";
+} from "../context/BlockchainContext";
 
 const Login = () => {
   const router = useRouter();
