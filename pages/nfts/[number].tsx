@@ -378,7 +378,11 @@ function Buy(props) {
                                 "Content-Type": "application/json",
                               },
                               method: "get",
-                              url: "https://respctbot.herokuapp.com/username/{userName}/{connectedAddress}",
+                              url:
+                                "https://respctbot.herokuapp.com/username/" +
+                                userName +
+                                "/" +
+                                connectedAccount,
                               // "http://127.0.0.1:8000/" +
                               // connectedAccount +
                               // "/" +
