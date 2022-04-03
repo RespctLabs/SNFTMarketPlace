@@ -21,14 +21,14 @@ const Login = () => {
     useContext(BlockchainContext);
   return (
     <>
-      <div className="mx-auto flex justify-center">
+      <div className="mx-auto flex justify-center mx-5 md:mx-0">
         <Image src={LoginSvg} alt="Login" />
       </div>
       <div className="mx-auto flex flex-col justify-center">
-        <div className="mx-auto -mt-32">
+        <div className="mx-auto md:-mt-32">
           <Image src={MetamaskSvg} alt="Metamask" />
         </div>
-        <div className="flex flex-col justify-center text-xl space-y-5 -mt-24 mb-24">
+        <div className="flex flex-col justify-center text-xl space-y-5 md:-mt-24 mb-10">
           {connectedAccount ? (
             <>
               <p className="text-OurBlue text-center">
@@ -52,7 +52,7 @@ const Login = () => {
           )}
         </div>
       </div>
-      <div className="bg-respct h-64 bg-contain bg-no-repeat"></div>
+      <div className="bg-respct h-24 md:h-48 bg-contain bg-no-repeat mx-5 md:mx-0"></div>
       <style jsx>{`
         .connectBtn {
           box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1);
