@@ -38,8 +38,8 @@ const Navbar = (props) => {
   return (
     <>
       <div id="header" className="py-6 xl:pt-6 ">
-        <div className="headerDiv rounded-3xl mx-5 md:mx-0 bg-OurBlack">
-          <div className="flex justify-between drop-shadow-2xl  text-white px-3">
+        <div className="headerDiv rounded-3xl  md:mx-0 bg-OurBlack">
+          <div className="flex justify-between drop-shadow-2xl text-white px-3">
             <div className="my-1 xl:ml-5 xl:mt-2 "></div>
             <div className="flex flex-col justify-center text-3xl">
               <Image src={RespctHeader} width={93} height={28} />
