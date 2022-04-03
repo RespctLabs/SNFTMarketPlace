@@ -452,49 +452,40 @@ function Buy(props) {
                           Check
                         </button>
 
-                                                {Checked ? (
-                                                    <button
-                                                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                                                        onClick={() => {
-                                                            upgrade();
-                                                        }}
-                                                    >
-                                                        Upgrade NFT
-                                                    </button>
-                                                ) : (
-                                                    " "
-                                                )}
-                                            </>
-                                        ) : (
-                                            <div> NFT already upgraded </div>
-                                        )
-                                    ) : (
-                                        <div>
-                                            {" "}
-                                            Here is an NFT bought by someone
-                                            else{" "}
-                                        </div>
-                                    )
-                                ) : Buyerof > 0 ? (
-                                    <div>
-                                        {" "}
-                                        already owned nft, on read only mode{" "}
-                                    </div>
-                                ) : (
-                                    <div className="flex justify-center">
-                                        <button
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                listNFTForSale();
-                                              }}
-                                            className="bg-[#03AFD0] rounded-md shadow-md shadow-[#45ABD6]"
-                                        >
-                                            <div className="text-white font-bold px-12 py-1">
-                                                Buy
-                                            </div>
-                                        </button>
-                                    </div>
-                                )}
+                        {Checked ? (
+                          <button
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                            onClick={() => {
+                              upgrade();
+                            }}
+                          >
+                            Upgrade NFT
+                          </button>
+                        ) : (
+                          " "
+                        )}
+                      </>
+                    ) : (
+                      <div> NFT already upgraded </div>
+                    )
+                  ) : (
+                    <div></div>
+                  )
+                ) : Buyerof > 0 ? (
+                  <div> already owned nft, on read only mode </div>
+                ) : (
+                  <div className="flex justify-center">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        listNFTForSale();
+                      }}
+                      className="bg-[#03AFD0] rounded-md shadow-md shadow-[#45ABD6]"
+                    >
+                      <div className="text-white font-bold px-12 py-1">Buy</div>
+                    </button>
+                  </div>
+                )}
 
                 {/* {Owned ? (
                   Owned === true ? (
