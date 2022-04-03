@@ -406,7 +406,9 @@ function Buy(props) {
                                 console.log(response);
                                 console.log(response.data);
 
-                                if (response.data.value) {
+                                if (response.data.status === 1) {
+                                  console.log("getting engagement points");
+                                  getEngagementPoints();
                                   console.log(
                                     "heemankverma has tweeted about Respct.club, he can now be allowed to upgrade his nft"
                                   );
