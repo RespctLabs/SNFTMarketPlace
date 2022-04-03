@@ -14,5 +14,5 @@ function HomePage() {
     </div>
   );
 }
-
+HomePage.layout = "L1";
 export default HomePage;

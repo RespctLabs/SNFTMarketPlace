@@ -27,7 +27,7 @@ const Layout = (props) => {
         <div className="container mx-auto mb-auto sm:px-8 md:px-4 lg:px-16 xl:px-20">
           {props.children}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   } else {
