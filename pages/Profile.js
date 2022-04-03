@@ -152,7 +152,7 @@ function Profile() {
                     <p className="text-sm mx-4 md:mx-0 md:text-base text-center md:text-left md:w-4/5">
                         {!description // note the !
                             ? description.toUpperCase()
-                            : " A brand for the metaverse. Built by the community. View the collection at azuki.com/gallery. Azuki starts with a collection of10,000 avatars that give you membership access to The Garden: a corner of the internet where artists, builders, and web3 enthusiasts meet to create a decentralized future. Azuki holders receive access to exclusive drops, experiences, and more. Visit azuki.com for more details."}
+                            : "Knock Knock, Neo.... Follow the MetaBunny in its odyssey.” An odyssey of knowledge and wealth. Unlike other NFT collections, MetaBunny from respct.club is collected over time by attending workshops, sessions, and engaging with our content. You don’t buy bunnies, you earn them. Bunnies are rewards for your loyalty and engagement. These are #Respcted Bunnies."}
                     </p>
                 </div>
                 <div
