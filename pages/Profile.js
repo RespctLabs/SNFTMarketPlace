@@ -17,10 +17,10 @@ import ChildContract from "../artifacts/contracts/ComposableChildrenERC1155.sol/
 
 import { BlockchainContext } from "../context/BlockchainContext.tsx";
 
-export default function Profile() {
-    const [NumberOfNFTs, setNumberOfNFTs] = React.useState(0);
-    const [description, setDescription] = React.useState("2");
-    const { getProvider } = useContext(BlockchainContext);
+function Profile() {
+  const [NumberOfNFTs, setNumberOfNFTs] = React.useState(0);
+  const [description, setDescription] = React.useState("2");
+  const { getProvider } = useContext(BlockchainContext);
 
     useEffect(() => {
         console.log("hello");
@@ -214,3 +214,6 @@ export default function Profile() {
         </div>
     );
 }
+
+Profile.layout = "L1";
+export default Profile;
