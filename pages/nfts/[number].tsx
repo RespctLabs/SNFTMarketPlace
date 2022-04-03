@@ -332,7 +332,10 @@ export default function Buy(props) {
                 </div>
                 <TwitterShareButton
                   title={
-                    "gathering enagement points to level up my nft " + Hash
+                    "gathering enagement points to level up my nft " +
+                    Hash +
+                    " " +
+                    connectedAccount
                   }
                   url={"@RespctClub"}
                   onShareWindowClose={() => {
@@ -365,7 +368,9 @@ export default function Buy(props) {
                         <TwitterShareButton
                           title={
                             "gathering enagement points to level up my nft " +
-                            Hash
+                            Hash +
+                            " " +
+                            connectedAccount
                           }
                           url={"@RespctClub"}
                           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
@@ -388,7 +393,11 @@ export default function Buy(props) {
                                 "Content-Type": "application/json",
                               },
                               method: "get",
-                              url: "http://127.0.0.1:8000/" + userName,
+                              url:
+                                "http://127.0.0.1:8000/" +
+                                connectedAccount +
+                                "/" +
+                                userName,
                             })
                               .then((response) => {
                                 console.log(response);

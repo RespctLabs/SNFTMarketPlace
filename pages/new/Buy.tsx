@@ -2,9 +2,9 @@ import React from "react";
 import BuyNFT from "../public/images/buyNft.svg";
 import Image from "next/image";
 import Polygon from "../public/svg/polygon.svg";
-import PrimaryButton from "../components/common/PrimaryButton";
+import PrimaryButton from "../../components/common/PrimaryButton";
 import ProfileImage from "../public/images/profileImage.svg";
-import Carousels from "../components/common/carousel";
+import Carousels from "../../components/common/carousel";
 import VerticalAzuki from "../public/images/verticalAzuki.svg";
 import FVerticalAzuki from "../public/images/fverticalAzuki.svg";
 import Level3 from "../public/images/level3.svg";
@@ -12,7 +12,7 @@ import AzukiNo from "../public/images/azukiNo.svg";
 import ProgressL4 from "../public/images/progressL4.svg";
 import ProgressL4Mobile from "../public/images/progressL4Mobile.svg";
 import ProgressBar from "react-customizable-progressbar";
-import { BlockchainContext } from "../context/BlockchainContext";
+import { BlockchainContext } from "../../context/BlockchainContext";
 import {
     getMarketContract,
     getTokenContract,
