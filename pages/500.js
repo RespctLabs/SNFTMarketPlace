@@ -11,7 +11,7 @@ const Page404 = () => {
       <div className="container mx-auto">
         <div className="flex justify-center mx-4 md:mx-0">
           <div className="flex flex-col justify-center ">
-            <Image src={Error} width={70} height={400} />
+            <Image src={Error} width={70} height={400} alt={"imange"} />
           </div>
           <div className="flex flex-col">
             <Image src={FourSvg} width={200} height={70} />
