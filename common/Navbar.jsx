@@ -45,6 +45,7 @@ const Navbar = (props) => {
               <Image src={RespctHeader} width={93} height={28} />
             </div>
             <div className=" flex my-3 xl:mr-2 xl:mt-4">
+              <p className="text-OurPurple">Mumbai Testnet</p>
               <div className="mx-2">
                 {connectedAccount ? (
                   <div>
