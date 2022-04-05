@@ -1,5 +1,2 @@
-
-  export const ParentAddress = "0x4c69FA6D93FF7d3a3808530EF7C04f2e58dC4525"
-  export const ChildAddress = "0x8979437e3B494a35092Ac34CBF92669b41e3A41f"
-
-  
+export const ParentAddress = "0x7cb0742491FE6f6aE1C1464E8Fa9B578aD24cf7e";
+export const ChildAddress = "0xF79Ef58105e44134f9FC2f309519AE04903860d6";
