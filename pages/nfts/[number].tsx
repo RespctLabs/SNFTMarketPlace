@@ -182,7 +182,7 @@ function Buy() {
               <div>
                 {isNFTminted ? (
                   isUserOwner ? (
-                    false ? (
+                    isNFTupgraded ? (
                       <>Congratulations</>
                     ) : hasUserEngaged ? (
                       <PrimaryButton
