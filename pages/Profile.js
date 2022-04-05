@@ -9,7 +9,7 @@ import NFTCard from "../components/common/NftCard";
 import Image from "next/image";
 import Link from "next/link";
 import { TwitterShareButton } from "react-share";
-
+import { CheckOwnership } from "./api/blockchain";
 import { ParentAddress, ChildAddress } from "../config";
 
 import ParentContract from "../artifacts/contracts/ComposableParentERC721.sol/ComposableParentERC721.json";
@@ -20,7 +20,19 @@ import { BlockchainContext } from "../context/BlockchainContext.tsx";
 function Profile() {
   const [NumberOfNFTs, setNumberOfNFTs] = React.useState(0);
   const [description, setDescription] = React.useState("2");
-  const { getProvider } = useContext(BlockchainContext);
+  const { getProvider, connectedAccount } = useContext(BlockchainContext);
+
+  const [Owner, setOwner] = React.useState(false);
+
+  async function CheckifUserOwnsaNFT() {
+    let response = await CheckOwnership(getProvider, connectedAccount);
+    console.log(response, "response");
+    if (response > 0) {
+      setOwner(true);
+    } else {
+      setOwner(false);
+    }
+  }
 
   useEffect(() => {
     console.log("hello");
@@ -47,6 +59,7 @@ function Profile() {
       // getMintedNFTs();
     }
     getM();
+    CheckifUserOwnsaNFT();
   });
 
   async function getMintedNFTs() {
@@ -76,24 +89,26 @@ function Profile() {
         </Link>
       );
     }
-    Nfts.push(
-      <Link href={"/nfts/" + (NumberOfNFTs + 1)} passHref>
-        <a>
-          <div className=" headerDiv p-2 m-8 rounded-lg bg-OurBlack w-60 flex flex-col justify-center">
-            <div className="flex justify-between items-center mx-auto text-white hover:text-black font-bold text-2xl text-center w-52 h-52 bg-[#464646] rounded-lg">
-              MINT your own NFT
+    if (!Owner) {
+      Nfts.push(
+        <Link href={"/nfts/" + (NumberOfNFTs + 1)} passHref>
+          <a>
+            <div className=" headerDiv p-2 m-8 rounded-lg bg-OurBlack w-60 flex flex-col justify-center">
+              <div className="flex justify-between items-center mx-auto text-white hover:text-black font-bold text-2xl text-center w-52 h-52 bg-[#464646] rounded-lg">
+                MINT your own NFT
+              </div>
+              <div className="flex justify-between text-white mx-3">
+                <p className="font-semibold">Respct NFT</p>
+                <p className="text-OurGreen">Level sNFT</p>
+              </div>
+              <div className="flex justify-end text-white mx-3">
+                {/* <p className="text-OurPurple">Top Bid 0</p> */}
+              </div>
             </div>
-            <div className="flex justify-between text-white mx-3">
-              <p className="font-semibold">Respct NFT</p>
-              <p className="text-OurGreen">Level sNFT</p>
-            </div>
-            <div className="flex justify-end text-white mx-3">
-              {/* <p className="text-OurPurple">Top Bid 0</p> */}
-            </div>
-          </div>
-        </a>
-      </Link>
-    );
+          </a>
+        </Link>
+      );
+    }
     return (
       <div id="cards" className="md:grid md:grid-cols-4 md:gap-12">
         {Nfts}

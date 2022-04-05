@@ -207,7 +207,7 @@ function Buy() {
                           url="snft.respct.club"
                           title="My First Upgradable NFT"
                           via={
-                            "Gathering Engagement Points for Upgrading My #Respct NFT to Level " +
+                            "Gathering Engagement Points for Upgrading My #Respct NFT to Level @RespctClub " +
                             (NFTlevel + 1) +
                             ". Let's Gooo!"
                           }

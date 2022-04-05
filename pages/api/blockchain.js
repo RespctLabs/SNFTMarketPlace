@@ -136,6 +136,19 @@ async function CheckOwnership(getProvider, connectedAccount) {
   return value;
 }
 
+async function OwnerOfNFT(getProvider, nftId) {
+  const [provider, signer, Parentcontract, Childcontract] =
+    await useGetNecessities(getProvider);
+
+  try {
+    let t1 = await Parentcontract.ownerOf(nftId);
+    console.log(t1, "owner");
+  } catch (err) {
+    console.log(err, "error");
+  }
+  return true;
+}
+
 export {
   BuyNFT,
   GetComposableCount,
@@ -143,4 +156,5 @@ export {
   CheckOwnership,
   useGetNecessities,
   UpgradeNFT,
+  OwnerOfNFT,
 };
