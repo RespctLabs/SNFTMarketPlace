@@ -26,4 +26,5 @@ export const checkValidity = (url, method) => {
       console.log(error);
       return false;
     });
+  return false;
 };
