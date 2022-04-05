@@ -94,9 +94,9 @@ function Buy() {
       connectedAccount;
     let response = checkValidity(url, "get");
 
-    if (response) {
+    if (response === 1) {
       sethasUserEngaged(true);
-    } else {
+    } else if (response === 0) {
       sethasUserEngaged(false);
     }
   }
@@ -124,6 +124,7 @@ function Buy() {
     CheckifNFTminted();
     CheckifUserOwnsthisNFT();
     CheckNFTlevel();
+    CheckEngagement();
   });
 
   console.log(isNFTminted, " is nft minted");
@@ -132,6 +133,7 @@ function Buy() {
   console.log(isNFTupgraded, " is nft upgraded");
   console.log(hasUserEngaged, " has user engaged");
 
+  console.log(URLpath, "URL path");
   console.log(userName, " user name");
   console.log(NFTlevel, " nft level");
 
@@ -177,23 +179,58 @@ function Buy() {
                 </div>
               </div>
 
-              {/* <p className="text-white"> {Hash ? Hash : ""}</p> */}
-
               <div>
                 {isNFTminted ? (
                   isUserOwner ? (
-                    isNFTupgraded ? (
+                    false ? (
                       <>Congratulations</>
                     ) : hasUserEngaged ? (
-                      <>Upgrade NFT button</>
+                      <PrimaryButton
+                        onClick={() => UpgradedNFT()}
+                        text="Upgrade"
+                        color="White"
+                        shadow="White"
+                      />
                     ) : (
-                      <>Show //input, tweet and check// Engagement button</>
+                      <>
+                        <div>
+                          <input
+                            className="rounded-2xl indent-3 border-2 border-white p-1 w-full md:w-1/2 text-OurBlack"
+                            type="text"
+                            placeholder="Enter your name"
+                            value={userName}
+                            required
+                            onChange={(e) => setuserName(e.target.value)}
+                          />
+                        </div>
+                        <TwitterShareButton
+                          url="snft.respct.club"
+                          title="My First Upgradable NFT"
+                          via={
+                            "Gathering Engagement Points for Upgrading My #Respct NFT to Level " +
+                            (NFTlevel + 1) +
+                            ". Let's Gooo!"
+                          }
+                          hashtags={["Respct", "NFT", "Upgrading", "Level"]}
+                        >
+                          Tweet
+                        </TwitterShareButton>
+
+                        <PrimaryButton
+                          onClick={() => {
+                            CheckEngagement();
+                          }}
+                          text="Check Engagement"
+                          color="White"
+                          shadow="White"
+                        />
+                      </>
                     )
                   ) : (
                     <>Show nft,level and Bought buy someone else</>
                   )
                 ) : isUserOtherOwner ? (
-                  <>Already Owned some other nft</>
+                  <>Already Owner of some other nft</>
                 ) : (
                   <>NFT not minted Show Buy button</>
                 )}
