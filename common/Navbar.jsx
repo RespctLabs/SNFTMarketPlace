@@ -35,26 +35,27 @@ const Navbar = (props) => {
       setScrolled(false);
     }
   };
+
   return (
     <>
       <div id="header" className="py-6 xl:pt-6 ">
-        <div className="headerDiv rounded-3xl  md:mx-0 bg-OurBlack">
-          <div className="flex justify-between drop-shadow-2xl text-white px-3">
-            <div className="my-1 xl:ml-5 xl:mt-2 "></div>
+        <div className="headerDiv rounded-2xl mx-5 bg-OurBlack">
+          <div className="flex justify-between drop-shadow-2xl text-white mx-3">
+            <div className=""></div>
             <div className="flex flex-col justify-center text-3xl">
               <Image src={RespctHeader} width={93} height={28} />
             </div>
-            <div className=" flex my-3 xl:mr-2 xl:mt-4">
-              <p className="text-OurPurple">Mumbai Testnet</p>
-              <div className="mx-2">
+            <div className=" flex my-3 md:mr-2 md:mt-4">
+              <div className="mx-3 flex items-center space-x-5">
+                <p className="text-OurPurple font-semibold px-4">Mumbai Testnet</p>
                 {connectedAccount ? (
                   <div>
                     {" "}
                     <button
                       onClick={() => disconnect()}
-                      className="block p-2 text-white "
+                      className="block p-2 text-white"
                     >
-                      {connectedAccount}
+                      {connectedAccount.substr(0, 10)}
                     </button>
                   </div>
                 ) : (
