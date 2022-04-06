@@ -182,7 +182,7 @@ function Buy() {
               <div>
                 {isNFTminted ? (
                   isUserOwner ? (
-                    false ? (
+                    isNFTupgraded ? (
                       <>Congratulations</>
                     ) : hasUserEngaged ? (
                       <PrimaryButton
@@ -232,17 +232,17 @@ function Buy() {
                 ) : isUserOtherOwner ? (
                   <>Already Owner of some other nft</>
                 ) : (
-                      <>
-                        NFT not minted Show Buy button
-                        <PrimaryButton
-                          onClick={() => {
-                            CheckEngagement();
-                          }}
-                          text="Check Engagement"
-                          color="OurBlue"
-                          shadow="OurBlue"
-                        />
-                      </>
+                  <>
+                    NFT not minted Show Buy button
+                    <PrimaryButton
+                      onClick={() => {
+                        CheckEngagement();
+                      }}
+                      text="Check Engagement"
+                      color="OurBlue"
+                      shadow="OurBlue"
+                    />
+                  </>
                 )}
               </div>
             </div>
