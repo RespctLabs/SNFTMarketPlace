@@ -15,12 +15,12 @@ export default function NftCard(props) {
       <Image  src={ProfileNFT} layout="fixed" alt={"Nft"}  />
       </div>
       <div className="flex justify-between text-white">
-        <p className="font-semibold">{props.element.name ? props.element.name : "Asuki"}</p>
-        <p className="text-OurGreen">{props.element.level ? props.element.level : "Level 3"}</p>
+        <p className="font-semibold">{props.element.name ? props.element.name : "Respct NFT"}</p>
+        <p className="text-OurGreen">{props.element.level ? props.element.level : "Level sNFT"}</p>
       </div>
       <div className="flex justify-between text-white">
-        <p>{props.element.uuid ? props.element.uuid : "#2789"}</p>
-        <p className="text-OurPurple">{props.element.bid ? props.element.bid  : "top bid 5.6"}</p>
+        {/* <p>{props.element.uuid ? props.element.uuid : "#2789"}</p> */}
+        {/* <p className="text-OurPurple">{props.element.bid ? props.element.bid  : "top bid 5.6"}</p> */}
       </div>
     </div>
   );
