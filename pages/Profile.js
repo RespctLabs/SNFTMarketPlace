@@ -129,7 +129,7 @@ function Profile() {
 
       <div className="flex flex-col md:flex-row md:pt-12 ">
         <div id="profileLeft" className="md:w-3/5 md:pr-12">
-          <p className="text-sm mx-4 md:mx-0 md:text-base text-center md:text-left md:w-4/5">
+          <p className="text-sm mx-4 md:mx-0 md:text-base text-center md:text-left md:w-4/6">
             {!description // note the !
               ? description.toUpperCase()
               : "Knock Knock, Neo.... Follow the MetaBunny in its odyssey.” An odyssey of knowledge and wealth. Unlike other NFT collections, MetaBunny from respct.club is collected over time by attending workshops, sessions, and engaging with our content. You don’t buy bunnies, you earn them. Bunnies are rewards for your loyalty and engagement. These are #Respcted Bunnies."}

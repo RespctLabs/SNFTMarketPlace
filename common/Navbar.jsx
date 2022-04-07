@@ -41,19 +41,20 @@ const Navbar = (props) => {
       <div id="header" className="py-6 xl:pt-6 ">
         <div className="headerDiv rounded-2xl mx-5 bg-OurBlack">
           <div className="flex justify-between drop-shadow-2xl text-white mx-3">
-            <div className=""></div>
+            <div className="flex items-center mx-3">
+              <p className="text-OurBlue font-semibold px-4">Mumbai Testnet</p>
+            </div>
             <div className="flex flex-col justify-center text-3xl">
               <Image src={RespctHeader} width={93} height={28} />
             </div>
             <div className=" flex my-3 md:mr-2 md:mt-4">
               <div className="mx-3 flex items-center space-x-5">
-                <p className="text-OurPurple font-semibold px-4">Mumbai Testnet</p>
                 {connectedAccount ? (
                   <div>
                     {" "}
                     <button
                       onClick={() => disconnect()}
-                      className="block p-2 text-white"
+                      className="block p-2 text-OurPurple font-semibold"
                     >
                       {connectedAccount.substr(0, 10)}
                     </button>
