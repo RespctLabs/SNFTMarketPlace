@@ -56,7 +56,9 @@ const Navbar = (props) => {
                       onClick={() => disconnect()}
                       className="block p-2 text-OurPurple font-semibold"
                     >
-                      {connectedAccount.substr(0, 10)}
+                      {connectedAccount.substr(0, 5)}
+                      ...
+                      {connectedAccount.substr(38, 42)}
                     </button>
                   </div>
                 ) : (

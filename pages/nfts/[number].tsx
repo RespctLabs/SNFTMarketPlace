@@ -89,14 +89,14 @@ function Buy() {
     }
   }
 
-  async function CheckEngagement() {
+  function CheckEngagement() {
     let url =
       "https://respctbot.herokuapp.com/username/" +
       userName +
       "/" +
       connectedAccount;
     let response = checkValidity(url, "get");
-
+    console.log(response, " :is the response");
     if (response === 1) {
       sethasUserEngaged(true);
     } else if (response === 0) {
@@ -146,6 +146,7 @@ function Buy() {
     CheckifNFTminted();
     CheckifUserOwnsthisNFT();
     CheckNFTlevel();
+    console.log("calling");
     CheckEngagement();
     GetOwnerDetails();
   });
