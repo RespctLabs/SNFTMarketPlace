@@ -26,6 +26,7 @@ import {
   CheckOwnership,
   CheckLevel,
   UpgradeNFT,
+  OwnerOfNFT,
 } from "../api/blockchain";
 import { checkValidity } from "../api/axios";
 
@@ -33,6 +34,8 @@ function Buy() {
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
 
   const [URLpath, setURLpath] = useState(window.location.pathname.toString());
+
+  const [Owner, setOwner] = React.useState(undefined);
 
   const [isNFTminted, setisNFTminted] = React.useState(false);
   const [isUserOwner, setisUserOwner] = React.useState(false);
@@ -120,11 +123,31 @@ function Buy() {
     }
   }
 
+  async function GetOwnerDetails() {
+    let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+
+    let response = await OwnerOfNFT(getProvider, matches);
+    console.log(response);
+    setOwner(response);
+
+    // let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+    // if (response === matches) {
+    //   setisUserOwner(true);
+    // } else if (response !== 0) {
+    //   setisUserOtherOwner(true);
+    //   setisUserOwner(false);
+    // } else {
+    //   setisUserOtherOwner(false);
+    //   setisUserOwner(false);
+    // }
+  }
+
   useEffect(() => {
     CheckifNFTminted();
     CheckifUserOwnsthisNFT();
     CheckNFTlevel();
     CheckEngagement();
+    GetOwnerDetails();
   });
 
   console.log(isNFTminted, " is nft minted");
@@ -144,23 +167,23 @@ function Buy() {
           <div id="left" className="md:w-1/2">
             <div className="flex justify-center mx-4 md:mx-0">
               <div className="flex flex-col justify-center -mr-24">
-                <span className="uppercase stroke text-8xl bg-clip-text poppinsFont rotate-[270deg] text-black">
+                <span className="uppercase stroke text-8xl text-center bg-clip-text poppinsFont rotate-[270deg] text-OurBlack">
                   Meta
                 </span>
               </div>
               <div className="flex flex-col">
-                <span className="uppercase stroke pt-12 text-8xl bg-clip-text poppinsFont text-black">
+                <span className="uppercase  text-center stroke pt-12 text-8xl bg-clip-text poppinsFont text-OurBlack">
                   Level {NFTlevel}
                 </span>
                 <div className="nftImage shadow-2xl z-10 rounded-lg">
                   <Image src={BuyNFT2} alt="image" />
                 </div>
-                <span className="uppercase stroke text-8xl bg-clip-text poppinsFont text-black">
+                <span className="uppercase stroke text-center text-8xl bg-clip-text poppinsFont text-OurBlack">
                   Respct
                 </span>
               </div>
               <div className="flex flex-col justify-center -ml-32">
-                <span className="uppercase stroke text-8xl bg-clip-text poppinsFont rotate-[270deg] text-black">
+                <span className="uppercase stroke text-8xl text-center bg-clip-text poppinsFont rotate-[270deg] text-OurBlack">
                   Bunny
                 </span>
               </div>
@@ -168,9 +191,7 @@ function Buy() {
           </div>
           <div id="right" className="md:w-1/3 text-white md:py-12">
             <div className="mx-auto py-10 md:py-20 mx-5 md:mx-0">
-              <p className="text-2xl md:text-6xl flex ">Meta Bunny</p>
-              <p className="text-lg md:text-3xl flex ">Level {NFTlevel}</p>
-
+              <p className="text-2xl md:text-6xl flex text-white">Meta Bunny</p>
               <span className="flex md:pt-2  ">
                 <p>By &nbsp;</p>
                 <p className="text-OurBlue">Respct</p>
@@ -182,7 +203,7 @@ function Buy() {
                 <div className="flex flex-col md:mt-3 ">
                   <div className="text-4xl text-OurBlue">1.00 MATIC</div>
                   <div className="text-2xl text-OurSecondGrey md:mt-3">
-                    $3,618.36
+                    $1.46
                   </div>
                 </div>
               </div>
@@ -232,7 +253,7 @@ function Buy() {
                       </>
                     )
                   ) : (
-                    <>Show nft,level and Bought buy someone else</>
+                    <>{Owner} &nbsp; is the owner of this NFT</>
                   )
                 ) : isUserOtherOwner ? (
                   <>Already Owner of some other nft</>

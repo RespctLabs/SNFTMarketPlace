@@ -143,10 +143,11 @@ async function OwnerOfNFT(getProvider, nftId) {
   try {
     let t1 = await Parentcontract.ownerOf(nftId);
     console.log(t1, "owner");
+    return t1;
   } catch (err) {
     console.log(err, "error");
   }
-  return true;
+  return undefined;
 }
 
 export {
