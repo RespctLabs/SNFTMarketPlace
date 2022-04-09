@@ -186,7 +186,7 @@ function Buy() {
                             </span>
                             <div className="flex my-5 md:mt-8 md:mb-8 ">
                                 <div>
-                                    <Image src={Polygon} layout="fixed" />
+                                    <Image src={Polygon} layout="fixed" alt="Polygon"/>
                                 </div>
                                 <div className="flex flex-col md:mt-3 ">
                                     <div className="text-4xl text-OurBlue">
@@ -205,10 +205,8 @@ function Buy() {
                                             <>Congratulations</>
                                         ) : hasUserEngaged ? (
                                             <PrimaryButton
-                                                onClick={() => UpgradedNFT()}
-                                                text="Upgrade"
-                                                color="white"
-                                                shadow="white"
+                                                    flag="upgrade"
+                                                    onCli={() => UpgradedNFT()}
                                             />
                                         ) : (
                                             <>
@@ -245,12 +243,8 @@ function Buy() {
                                                 </TwitterShareButton>
 
                                                 <PrimaryButton
-                                                    onClick={() => {
-                                                        CheckEngagement();
-                                                    }}
-                                                    text="Check Engagement"
-                                                    color="white"
-                                                    shadow="white"
+                                                            flag="checkEngagement"
+                                                            onCli={() =>}
                                                 />
                                             </>
                                         )
@@ -264,14 +258,11 @@ function Buy() {
                                     <>Already Owner of some other nft</>
                                 ) : (
                                     <>
-                                        NFT not minted Show Buy button
                                         <PrimaryButton
-                                            onClick={() => {
-                                                CheckEngagement();
-                                            }}
-                                            text="Check Engagement"
-                                            color="OurBlue"
-                                            shadow="OurBlue"
+                                                    flag="buy"
+                                                    onCli={() => {
+                                                        BuyNFT();
+                                                    }}
                                         />
                                     </>
                                 )}
