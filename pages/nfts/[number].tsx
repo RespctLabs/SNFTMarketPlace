@@ -288,7 +288,7 @@ function Buy() {
                                 ) : (
                                     <>
                                         <PrimaryButton
-                                            flag="buy"
+                                            flag="upgrade"
                                             onCli={() => {
                                                 BuyNFT();
                                             }}
