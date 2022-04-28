@@ -17,7 +17,7 @@ import VerticalAzuki from "../../public/images/verticalAzuki.svg";
 import Level3 from "../../public/images/level3.svg";
 import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
-
+import UpgradeModal from "../../components/upgradeModal";
 import { BlockchainContext } from "../../context/BlockchainContext";
 import {
     BuyNFT,
@@ -156,6 +156,10 @@ function Buy() {
         GetOwnerDetails();
     });
 
+    const modalShow = () => {
+        return <UpgradeModal NFTlevel={NFTlevel} />;
+    };
+
     console.log(isNFTminted, " is nft minted");
     console.log(isUserOwner, " is user owner");
     console.log(isUserOtherOwner, " is user other owner");
@@ -232,7 +236,10 @@ function Buy() {
                                         ) : hasUserEngaged ? (
                                             <PrimaryButton
                                                 flag="upgrade"
-                                                onCli={() => UpgradedNFT()}
+                                                onCli={() => {
+                                                    modalShow();
+                                                    UpgradedNFT();
+                                                }}
                                             />
                                         ) : (
                                             <>
@@ -288,7 +295,7 @@ function Buy() {
                                 ) : (
                                     <>
                                         <PrimaryButton
-                                            flag="upgrade"
+                                            flag="buy"
                                             onCli={() => {
                                                 BuyNFT();
                                             }}
