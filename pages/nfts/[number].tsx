@@ -18,6 +18,8 @@ import Level3 from "../../public/images/level3.svg";
 import AzukiNo from "../../public/images/azukiNo.svg";
 import FVerticalAzuki from "../../public/images/fverticalAzuki.svg";
 import UpgradeModal from "../../components/upgradeModal";
+import WaitLoad from "../../components/waitLoad";
+
 import { BlockchainContext } from "../../context/BlockchainContext";
 import {
     BuyNFT,
@@ -156,10 +158,6 @@ function Buy() {
         GetOwnerDetails();
     });
 
-    const modalShow = () => {
-        return <UpgradeModal NFTlevel={NFTlevel} />;
-    };
-
     console.log(isNFTminted, " is nft minted");
     console.log(isUserOwner, " is user owner");
     console.log(isUserOtherOwner, " is user other owner");
@@ -237,7 +235,7 @@ function Buy() {
                                             <PrimaryButton
                                                 flag="upgrade"
                                                 onCli={() => {
-                                                    modalShow();
+                                                    document.getElementsByClassName("upgradeModal")[0].classList.remove("hidden");
                                                     UpgradedNFT();
                                                 }}
                                             />
@@ -297,6 +295,7 @@ function Buy() {
                                         <PrimaryButton
                                             flag="buy"
                                             onCli={() => {
+                                                document.getElementsByClassName("upgradeModal")[0].classList.remove("hidden");
                                                 BuyNFT();
                                             }}
                                         />
@@ -317,6 +316,14 @@ function Buy() {
                         you earn them. Bunnies are rewards for your loyalty and
                         engagement. These are #Respcted Bunnies.
                     </p>
+                </div>
+                <div className="waitModal hidden">
+                    <WaitLoad />
+                </div>
+                <div className="upgradeModal hidden">
+                    <UpgradeModal NFTlevel={NFTlevel} onCli={() => {
+                        UpgradeNFT();
+                    }}/>
                 </div>
             </div>
             <style jsx>{`

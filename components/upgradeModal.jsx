@@ -1,17 +1,17 @@
-const UpgradeModal = ({ NFTlevel }) => {
+const UpgradeModal = ({ NFTlevel, onCli }) => {
     return (
         <>
-            <div className="bg-slate-400/50 min-h-screen absolute top-0 right-0 w-full flex justify-center items-center">
+            <div className="z-40 bg-slate-400/50 min-h-screen absolute top-0 right-0 w-full flex justify-center items-center">
                 <div className="bg-black rounded-2xl p-10 drop-shadow-xl w-48 md:w-[499px] space-y-5 relative">
-                    <div className="absolute">
-                        <span className="uppercase  text-center stroke pt-12 text-4xl md:text-8xl bg-clip-text poppinsFont text-OurBlack">
+                    <div className="absolute left-[200px]">
+                        <span className="uppercase  text-center stroke pt-12 text-3xl md:text-9xl bg-clip-text poppinsFont text-OurBlack">
                             {NFTlevel}
                         </span>
                     </div>
                     <div>
                         <div className="flex flex-row justify-between">
                             <div>
-                                Player Level {NFTlevel - 1}
+                                Player Level {NFTlevel}
                             </div>
                             <div>
                                 RP 100
@@ -27,28 +27,34 @@ const UpgradeModal = ({ NFTlevel }) => {
                         </div>
                         <div className="flex flex-row justify-between">
                             <div>
-                                <hr />
+                                <hr className="border border-OurBlue w-24 my-3"/>
                             </div>
                             <div>
-                                <hr />
+                                <hr className="border border-OurBlue w-24 my-3"/>
                             </div>
                         </div>
                         <div className="flex flex-row justify-between">
                             <div>
-                                Player Level {NFTlevel}
+                                Player Level {NFTlevel+1}
                             </div>
                             <div>
                                 RP 60
                             </div>
                         </div>
-                        <div className="flex flex-row justify-between">
+                        <div className="flex flex-row justify-between items-center mt-7">
                             <div>
-                                Cancel
+                                <button
+                                    onClick={() => {
+                                        document.getElementsByClassName("upgradeModal")[0].classList.add("hidden");
+                                    }}
+                                >
+                                    Cancel
+                                </button>
                             </div>
                             <div>
                                 <button
                                     onClick={onCli}
-                                    className="bg-[#7834BF] rounded-md shadow-md px-12 py-1 flex justify-around items-center"
+                                    className="bg-[#7834BF] rounded-md shadow-md px-10 flex justify-around items-center"
                                 >
                                     <div className="text-white font-bold">
                                         Upgrade
