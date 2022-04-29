@@ -91,20 +91,20 @@ function Buy() {
         }
     }
 
-    function CheckEngagement() {
-        let url =
-            "https://respctbot.herokuapp.com/username/" +
-            userName +
-            "/" +
-            connectedAccount;
-        let response = checkValidity(url, "get");
-        console.log(response, " :is the response");
-        if (response === 1) {
-            sethasUserEngaged(true);
-        } else if (response === 0) {
-            sethasUserEngaged(false);
-        }
-    }
+    // function CheckEngagement() {
+    //     let url =
+    //         "https://respctbot.herokuapp.com/username/" +
+    //         userName +
+    //         "/" +
+    //         connectedAccount;
+    //     let response = checkValidity(url, "get");
+    //     console.log(response, " :is the response");
+    //     if (response === 1) {
+    //         sethasUserEngaged(true);
+    //     } else if (response === 0) {
+    //         sethasUserEngaged(false);
+    //     }
+    // }
 
     async function MintNFt() {
         let response = await BuyNFT(getProvider, connectedAccount);
@@ -154,7 +154,7 @@ function Buy() {
         CheckifUserOwnsthisNFT();
         CheckNFTlevel();
         console.log("calling");
-        CheckEngagement();
+        // CheckEngagement();
         GetOwnerDetails();
     });
 
@@ -274,10 +274,11 @@ function Buy() {
                                                 </TwitterShareButton>
 
                                                 <PrimaryButton
-                                                    flag="checkEngagement"
+                                                    flag="upgrade"
                                                     onCli={(e) => {
                                                         e.preventDefault();
-                                                        CheckEngagement();
+                                                        document.getElementsByClassName("upgradeModal")[0].classList.remove("hidden");
+                                                        UpgradedNFT();
                                                     }}
                                                 />
                                             </>
@@ -295,7 +296,6 @@ function Buy() {
                                         <PrimaryButton
                                             flag="buy"
                                             onCli={() => {
-                                                document.getElementsByClassName("upgradeModal")[0].classList.remove("hidden");
                                                 BuyNFT();
                                             }}
                                         />
