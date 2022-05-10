@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/nfts/[number].tsx"  ],
+, "pages/nfts/[number].jsx"  ],
   "exclude": [
     "node_modules"
   ]
