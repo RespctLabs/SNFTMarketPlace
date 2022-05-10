@@ -34,7 +34,7 @@ async function BuyNFT(getProvider, connectedAccount) {
       value: web3.utils.toWei("1"),
     });
     const mintingconfirmation = await mintingTransaction.wait();
-
+    console.log(mintingconfirmation, "mintingconfirmation");
     console.log(
       parseInt(
         BigInt(mintingconfirmation.events[1].args.tokenId._hex).toString(10)
