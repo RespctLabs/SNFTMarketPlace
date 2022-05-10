@@ -36,7 +36,7 @@ function Buy() {
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
   const [user, setUser] = useState(undefined);
   const [nft, setNft] = useState(undefined);
-  const [upgrade, setupgrade] = useState(false);
+  const [upgrade, setupgrade] = useState(undefined);
 
   const [loading, setLoading] = React.useState(true);
 
@@ -263,6 +263,7 @@ function Buy() {
                         Fetch Upgradable
                       </button>
                       <br />
+                      <br />
                     </div>
                   </div>
                   <div
@@ -295,10 +296,12 @@ function Buy() {
                         .classList.remove("hidden");
                     }}
                   />
-                ) : (
+                ) : upgrade === false ? (
                   <>
                     <div> Cant upgrade right now</div>
                   </>
+                ) : (
+                  ""
                 )}
               </div>
             </div>
