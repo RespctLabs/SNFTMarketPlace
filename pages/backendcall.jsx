@@ -1,53 +1,51 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
-import { BlockchainContext } from "../context/BlockchainContext";
-function Backendcall() {
-  const [address, setaddress] = useState(null);
-  const [parentaddress, setparentaddress] = useState(null);
 
-  const callbackend = () => {
+export default function backendcall() {
+    const [address, setaddress] = React.useState(null);
+    const [parentaddress, setparentaddress] = React.useState(null);
+    const [metaData, setmetaData] = React.useState(null);
+
+
+  const getmetadata = () => {
     axios
-      .get("/api/nfts/getmetadata/", {
+      .get(`/api/nfts/getmetadata/`, {
         address: address,
         parentaddress: parentaddress,
       })
       .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
+        // console.log(res.data);
+        setmetaData(res.data);
+      }).catch((err) => {
         console.log(err);
-      });
-  };
+        }
+      );
+    }
 
+
+    console.log(res);
   return (
-    <div className="h-screen ">
-      <input
-        type="text"
-        placeholder="Enter address"
-        onChange={(e) => setaddress(e.target.value)}
-      />
-      <br />
-      <br />
-
-      <input
-        type="text"
-        placeholder="Enter parent address"
-        onChange={(e) => setparentaddress(e.target.value)}
-      />
-      <br />
-      <br />
-
+    <div>
+        {/* take input for address  */}
+        <input
+            type="text"
+            placeholder="Enter address"
+            onChange={(e) => setaddress(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="Enter parent address"
+            onChange={(e) => setparentaddress(e.target.value)}
+        />
+        
       <button
-        onClick={(e) => {
-          e.preventDefault();
+        onClick={() => {
           callbackend();
         }}
       >
         Callbackend
       </button>
+      backendcall
     </div>
   );
-}
-
-Backendcall.layout = "L1";
-export default Backendcall;
+};

@@ -21,3 +21,37 @@ export const checkValidity = (url, method) => {
     });
   return value;
 };
+
+const getmetadata = (address, parentaddress) => {
+  axios
+    .get(`/api/nfts/getmetadata/`, {
+      address: address,
+      parentaddress: parentaddress,
+    })
+    .then((res) => {
+      // console.log(res.data);
+      // setmetaData(res.data);
+      value = res
+    }).catch((err) => {
+      console.log(err);
+      }
+    );
+    return value
+  }
+
+const getNftData = (address, parentaddress) => {
+  axios
+    .get(`/api/nfts/getnftdata/`, {
+      address: address,
+      parentaddress: parentaddress,
+    })
+    .then((res) => {
+      value = res
+    }).catch((err) => {
+      console.log(err);
+      }
+    );
+    return value
+}
+
+// const

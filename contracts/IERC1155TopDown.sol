@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
 
@@ -38,7 +38,7 @@ interface IERC1155TopDown is IERC721, IERC1155Receiver {
         returns (uint256[] memory childIds);
 
     function childBalance(
-        uint256 tokrnId,
+        uint256 tokenId,
         address childContract,
         uint256 childTokenId
     ) external view returns (uint256);
