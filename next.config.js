@@ -5,6 +5,6 @@ const nextConfig = {
 
 module.exports = {
   images: {
-    domains: ["ipfs.infura.io"],
+    domains: ["ipfs.infura.io", "i.stack.imgur.com"],
   },
 };
