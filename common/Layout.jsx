@@ -10,13 +10,13 @@ import {
 const Layout = (props) => {
   const { connectedAccount, connectWallet, disconnect } =
     useContext(BlockchainContext);
-  useEffect(() => {
-    if (connectedAccount) {
-      router.push("/userdetails");
-    } else {
-      router.push("/Login");
-    }
-  }, [connectedAccount]);
+  // useEffect(() => {
+  //   if (connectedAccount) {
+  //     router.push("/userdetails");
+  //   } else {
+  //     router.push("/Login");
+  //   }
+  // }, [connectedAccount]);
 
   if (connectedAccount) {
     return (
@@ -34,13 +34,13 @@ const Layout = (props) => {
     return (
       <div>
         Proceeding to Login Page{" "}
-        {() => {
+        {/* {() => {
           if (connectedAccount) {
             router.push("/userdetails");
           } else {
             router.push("/Login");
           }
-        }}
+        }} */}
       </div>
     );
   }

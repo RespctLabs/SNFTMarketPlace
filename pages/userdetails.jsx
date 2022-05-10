@@ -16,7 +16,7 @@ function UserDetails() {
     fetchUser();
   }, []);
 
-  return <div>kjSDKFbksdb</div>;
+  return <div className=" mt-0 h-screen">{JSON.stringify(user)}</div>;
 }
 
 UserDetails.layout = "L1";
