@@ -52,7 +52,7 @@ const Login = () => {
     handlCheck();
     if (connectedAccount) {
       console.log(connectedAccount);
-      router.push("/Profile");
+      router.push("/userdetails");
     }
   });
   const { connectedAccount, connectWallet, disconnect } =

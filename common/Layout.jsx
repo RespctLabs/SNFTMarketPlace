@@ -12,7 +12,7 @@ const Layout = (props) => {
     useContext(BlockchainContext);
   useEffect(() => {
     if (connectedAccount) {
-      router.push("/Profile");
+      router.push("/userdetails");
     } else {
       router.push("/Login");
     }
@@ -36,7 +36,7 @@ const Layout = (props) => {
         Proceeding to Login Page{" "}
         {() => {
           if (connectedAccount) {
-            router.push("/Profile");
+            router.push("/userdetails");
           } else {
             router.push("/Login");
           }

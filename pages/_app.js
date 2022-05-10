@@ -5,6 +5,10 @@ import { BlockchainProvider } from "../context/BlockchainContext.tsx";
 import Layout from "../common/Layout.jsx";
 import Layout2 from "../common/Layout2.jsx";
 
+import axios from "axios";
+//set axios base url
+axios.defaults.baseURL = "http://localhost:5000/api";
+
 const layouts = {
   L1: Layout,
   L2: Layout2,
