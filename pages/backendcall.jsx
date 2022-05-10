@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-export default function backendcall() {
-    const [address, setaddress] = React.useState(null);
-    const [parentaddress, setparentaddress] = React.useState(null);
+export default function Backendcall() {
+  const [address, setaddress] = useState(null);
+  const [parentaddress, setparentaddress] = useState(null);
+  const [data, setdata] = useState(null);
 
-
-  const callbackend = (res) => {
+  const callbackend = () => {
     axios
       .get(`/api/nfts/getmetadata/`, {
         address: address,
@@ -14,29 +14,27 @@ export default function backendcall() {
       })
       .then((res) => {
         console.log(res.data);
-      }).catch((err) => {
+        setdata(res.data);
+      })
+      .catch((err) => {
         console.log(err);
-        }
-        );
-    }
-
-
-    console.log(res);
+      });
   };
+
+  console.log(res);
   return (
     <div>
-        {/* take input for address  */}
-        <input
-            type="text"
-            placeholder="Enter address"
-            onChange={(e) => setaddress(e.target.value)}
-        />
-        <input
-            type="text"
-            placeholder="Enter parent address"
-            onChange={(e) => setparentaddress(e.target.value)}
-        />
-        
+      {/* take input for address  */}
+      <input
+        type="text"
+        placeholder="Enter address"
+        onChange={(e) => setaddress(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Enter parent address"
+        onChange={(e) => setparentaddress(e.target.value)}
+      />
       <button
         onClick={() => {
           callbackend();
