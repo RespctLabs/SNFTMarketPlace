@@ -332,6 +332,7 @@ function Buy() {
                   <PrimaryButton
                     flag="upgrade"
                     onCli={() => {
+                      console.log(childContract)
                       childContract.methods
                         .upgradeSNFT(
                           nft.nftData.nftId,

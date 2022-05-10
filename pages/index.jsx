@@ -51,13 +51,16 @@ function HomePage() {
         />
         <meta itemProp="image" content="/icon.ico" />
       </Head>
-      <div>Welcome to respct</div>
-      <Link href="/Profile" passHref>
-        <div>Go to Respct&apos;s profile</div>
-      </Link>
-      <Link href="/Login" passHref>
-        <div>Go to Login Page</div>
-      </Link>
+      <div className="h-screen">
+
+        <div>Welcome to respct</div>
+        <Link href="/Profile" passHref>
+          <div>Go to Respct&apos;s profile</div>
+        </Link>
+        <Link href="/Login" passHref>
+          <div>Go to Login Page</div>
+        </Link>
+      </div>
     </div>
   );
 }
