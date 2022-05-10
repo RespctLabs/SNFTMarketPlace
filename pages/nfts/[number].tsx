@@ -115,9 +115,9 @@ function Buy() {
     }
     async function UpgradedNFT() {
         let matches = parseInt(URLpath.match(/(\d+)/)[0]);
-
+        const gP = getProvider;
         let response = await UpgradeNFT(
-            getProvider,
+            gP,
             connectedAccount,
             matches,
             1

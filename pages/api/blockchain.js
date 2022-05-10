@@ -76,7 +76,7 @@ async function UpgradeNFT(getProvider, connectedAccount, nftId, newlevel) {
     let t2 = await Childcontract.upgradeSNFT(
       nftId,
       newlevel,
-      web3.utils.encodePacked(pid),
+      web3.utils.encodePacked(nftId),
       {
         from: signer.getAddress(),
       }
