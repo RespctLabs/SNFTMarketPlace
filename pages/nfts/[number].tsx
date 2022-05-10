@@ -296,7 +296,7 @@ function Buy() {
                                         <PrimaryButton
                                             flag="buy"
                                             onCli={() => {
-                                                BuyNFT();
+                                                BuyNFT(getProvider, connectedAccount);
                                             }}
                                         />
                                     </>
