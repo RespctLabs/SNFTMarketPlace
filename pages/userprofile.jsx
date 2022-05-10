@@ -148,38 +148,44 @@ function Profile() {
       </div>
 
       <div className="flex ">
-        <div className=" headerDiv p-2 m-8 rounded-lg bg-OurBlack w-58 flex flex-col justify-center">
-          <div className=" w-52 h-52 bg-[#464646] rounded-lg">
-            <Image
-              src={nft ? nft.nftData.baseImageURL : ProfileImage}
-              alt="any"
-              height={200}
-              width={200}
-              layout="responsive"
-            />
-          </div>
-          <div className=" justify-around">
-            <p className="text-sm">currentMMR : {nft?.nftData.currentMMR}</p>
-            <p className="text-sm">Guild Name : {nft?.nftData.guildName}</p>
-          </div>
-          <div className="flex justify-end text-white mx-3">
-            {/* <p className="text-OurPurple">Top Bid 0</p> */}
-          </div>
-        </div>
-        {!nft ? (
+        {nft ? (
+          <Link href="/nfts/1">
+            <a>
+              <div className=" headerDiv p-2 m-8 rounded-lg bg-OurBlack w-58 flex flex-col justify-center">
+                <div className=" w-52 h-52 bg-[#464646] rounded-lg">
+                  <Image
+                    src={nft ? nft.nftData.baseImageURL : ProfileImage}
+                    alt="any"
+                    height={200}
+                    width={200}
+                    layout="responsive"
+                  />
+                </div>
+                <div className=" justify-around">
+                  <p className="text-sm">
+                    currentMMR : {nft?.nftData.currentMMR}
+                  </p>
+                  <p className="text-sm">
+                    Guild Name : {nft?.nftData.guildName}
+                  </p>
+                </div>
+                <div className="flex justify-end text-white mx-3">
+                  {/* <p className="text-OurPurple">Top Bid 0</p> */}
+                </div>
+              </div>
+            </a>
+          </Link>
+        ) : (
           <div className=" headerDiv p-2 m-8 rounded-lg bg-OurBlack w-60 flex flex-col justify-center">
             <div className="flex justify-between items-center mx-auto text-white hover:text-black font-bold text-2xl text-center w-52 h-52 bg-[#464646] rounded-lg">
               MINT your own NFT
             </div>
-            <div className="flex justify-between text-white mx-3">
-              <p className="font-semibold">Respct NFT</p>
-              <p className="text-OurGreen">Level sNFT</p>
-            </div>
+
             <div className="flex justify-end text-white mx-3">
               {/* <p className="text-OurPurple">Top Bid 0</p> */}
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
