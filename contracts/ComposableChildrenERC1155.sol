@@ -46,7 +46,11 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
 
     function _msgSender() internal view override(Context, ERC2771Context) returns(address) {
         return ERC2771Context._msgSender();
+<<<<<<< HEAD
+    }
+=======
     } 
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 
     function _msgData() internal view override(Context, ERC2771Context) returns(bytes memory) {
         return ERC2771Context._msgData();
@@ -106,6 +110,13 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
         string memory _uri,
         bytes calldata data // web3.utils.encodePacked(composableId)
     ) external returns (bool) {
+        uint256 _checkingComposableId;
+        uint256 _index = msg.data.length - 32;
+        assembly {
+            _checkingComposableId := calldataload(_index)
+        }
+        require(_checkingComposableId == _composableId,"Data must be equal to web3.solidityPack value of _composableId");
+
         //add tier checks  if tierId =1 bal(t-1) == 1
         // at t=0 bal(0) >= _FengagementPOints
         require(_upgradeToTierId != 0, ">Incorrect tierId, L0 ");
@@ -140,8 +151,11 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
 
         // check if owner has sufficient engagement points
 
+<<<<<<< HEAD
+=======
         burn(_msgSender(), 0, upgradeCost); // burn engagement tid 0
 
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
         _mint(address(csnftContract), _upgradeToTierId, 1, data);
         ERC1155PresetMinterPauser._setURI(_composableId, _upgradeToTierId, _uri);
         _setOwnerTierId(_msgSender(), _upgradeToTierId);
@@ -150,4 +164,48 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
     }
 
 
+<<<<<<< HEAD
+    function burn(address account, uint256 id, uint256 value) public virtual override(ERC1155Burnable) {
+        require(false, "burn is not allowed to be called by definition");
+    }
+
+
+    function burnBatch( address account, uint256[] memory ids, uint256[] memory values) public virtual override(ERC1155Burnable)
+    {
+        require(false, "burnBatch is not allowed to be called by definition");
+    }
+
+    function setApprovalForAll(address operator, bool approved) public override
+    {
+        require(false, "setApprovalForAll is not allowed to be called by definition");
+    }
+
+    function isApprovedForAll(address account, address operator) public view virtual override returns (bool)
+    {
+        require(false, "isApprovedForAll is not allowed to be called by definition");
+        return false;
+    }
+
+    function safeTransferFrom(address from, address to, uint256 id, uint256 amount, bytes calldata data) public virtual override
+    {
+        require(false, "safeTransferFrom is not allowed to be called by definition");
+    }
+
+    function safeBatchTransferFrom( address from, address to, uint256[] calldata ids, uint256[] calldata amounts, bytes calldata data) public virtual override
+    {
+        require(false, "safeBatchTransferFrom is not allowed to be called by definition");
+    }
+
+    function function _mint(address to,uint256 id,uint256 amount,bytes memory data) public virtual override
+    {
+        require(false, "_mint is not allowed to be called by definition");
+    }
+
+
+    function function _mintBatch(address to,uint256[] memory ids,uint256[] memory amounts,bytes memory data) public virtual override
+    {
+        require(false, "_mintBatch is not allowed to be called by definition");
+    }
+=======
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 }

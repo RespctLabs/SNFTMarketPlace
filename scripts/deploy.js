@@ -1,40 +1,46 @@
-const hre = require("hardhat");
-const fs = require("fs");
-let name = "fun";
-let symbol = "FUN";
-let baseURI = "fun.com/{id}";
-let csnftPrice = 1000;
-let tierUri = "https://ERC1155.com/{id}";
-let engagementPoint0 = 100;
+var fs = require('fs');
+let snftName = "Respct-BCG-AXIE NFTs"
+let symbol = "RBA"
+// let baseURI = "https://ERC998.com/{id}"
+let tierUpgradeCost1 = 500;
+
+let childURI = ""
+// const linkTokenAddress = ""; //fill it with address on  the same network 
 
 async function main() {
-  const ParentERC721 = await hre.ethers.getContractFactory(
+    console.log(await hre.ethers.getSigner())
+//Deploy Parent
+  const ComposableParentERC721 = await hre.ethers.getContractFactory(
     "ComposableParentERC721"
   );
-  const ParentNFT = await ParentERC721.deploy(
-    name,
+  const parentERC721 = await ComposableParentERC721.deploy(
+    snftName,
     symbol,
-    baseURI,
-    engagementPoint0
+    tierUpgradeCost1
   );
-  await ParentNFT.deployed();
-  console.log("Parent deployed to:", ParentNFT.address);
+  await parentERC721.deployed();
+  console.log("Parent deployed to:", parentERC721.address);
 
+//Deploy child
   const ChildERC1155 = await hre.ethers.getContractFactory(
     "ComposableChildrenERC1155"
   );
-  const childERC1155 = await ChildERC1155.deploy(tierUri, ParentNFT.address);
-  await childERC1155.deployed();
+  const childERC1155 = await ChildERC1155.deploy(childURI, parentERC721.address);
+  await childERC1155.deployed(fs.linkTokenAddress);
   console.log("Children deployed to:", childERC1155.address);
 
-  fs.writeFileSync(
-    "./config.js",
-    `
-  export const ParentAddress = "${ParentNFT.address}"
-  export const ChildAddress = "${childERC1155.address}"
+//Deploy Oracle
+//   const Oracle = await hre.ethers.getContractFactory("Oracle");
+//   const oracle = await Oracle.deploy();
+// console.log("Oracle deployed to :", oracle.address)
+//   fs.writeFileSync(
+//     "./config.js",
+//     `
+//   export const ParentAddress = "${parentERC721.address}"
+//   export const ChildAddress = "${childERC1155.address}"
 
-  `
-  );
+//   `
+//   );
 }
 
 main()

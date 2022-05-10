@@ -4,8 +4,13 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+<<<<<<< HEAD
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Burnable.sol";
+import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Pausable.sol";
+=======
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Burnable.sol";
 import "@openzeppelin/contracts/token/ERC1155/ERC1155Pausable.sol";
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 
 
