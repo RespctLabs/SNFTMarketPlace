@@ -6,7 +6,12 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+<<<<<<< HEAD
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+=======
+// import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+// import "@openzeppelin/contracts/utils/Pausable.sol";
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 import "./ERC2771Context.sol";
 // import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 
@@ -38,6 +43,7 @@ import "./ERC2771Context.sol";
  */
 
 contract ComposableParentERC721 is
+<<<<<<< HEAD
     AccessControl,
     ERC1155TopDown,
     ReentrancyGuard,
@@ -45,6 +51,15 @@ contract ComposableParentERC721 is
 {
     // EVENTS
     event NFTMinted(address indexed NFTowner, uint256 indexed tokenId);
+=======
+    ERC1155TopDown,
+    ERC2771Context,
+    AccessControl,
+    ReentrancyGuard    
+{
+    // EVENTS
+    event NFTMinted(address indexed NFTowner, uint256 indexed tokenId, string indexed tokenURI);
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
     event NFTMintPriceUpdated(uint256 indexed price);
     event TierUpgradePriceUpdated(
         uint256 indexed tierId,
@@ -64,7 +79,11 @@ contract ComposableParentERC721 is
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     address payable public owner;
     address public TRUSTED_FORWARDER = 0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
     mapping(uint256 => uint256) tierIdtoUpgradeCost;
     mapping(address => uint256) public ownerToComposableId;
 
@@ -80,12 +99,20 @@ contract ComposableParentERC721 is
     constructor(
         string memory name,
         string memory symbol,
+<<<<<<< HEAD
         uint256 firstUpgradeEngagementPoints)
+=======
+        uint256 firstUpgradeEngagementPoints) 
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
     ERC1155TopDown(name, symbol)
     ERC2771Context(TRUSTED_FORWARDER)
      {
         address deployer = payable(_msgSender());
+<<<<<<< HEAD
         owner = payable(_msgSender());
+=======
+        owner = payable(deployer);
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
         _setupRole(ADMIN_ROLE, deployer);
         _setupRole(MINTER_ROLE, deployer);
         _setupRole(PAUSER_ROLE, deployer);
@@ -231,7 +258,11 @@ contract ComposableParentERC721 is
 
     function _msgSender() internal view override(Context, ERC2771Context) returns(address) {
         return ERC2771Context._msgSender();
+<<<<<<< HEAD
     }
+=======
+    } 
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 
     function _msgData() internal view override(Context, ERC2771Context) returns(bytes memory) {
         return ERC2771Context._msgData();
@@ -291,10 +322,13 @@ contract ComposableParentERC721 is
         emit NFTMinted(recp, tokenId, tokenURI);
         // return tokenId;
     }
+<<<<<<< HEAD
 
     // function transfer(address to, uint256 amount) override public {
     // }
 
+=======
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 
     /**
      * @dev Burns `tokenId`. See {ERC721-_burn}.
@@ -385,6 +419,7 @@ contract ComposableParentERC721 is
     }
 
 
+<<<<<<< HEAD
     function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC721, IERC165) returns (bool) {
         return
             interfaceId == type(IERC1155).interfaceId ||
@@ -427,4 +462,10 @@ contract ComposableParentERC721 is
         require(false, "isApprovedForAll function is not callable by definition");
         return false;
     }
+=======
+    function supportsInterface(bytes4 interfaceId) public view virtual override(AccessControl, ERC721,  IERC165) returns (bool) {
+        return super.supportsInterface(interfaceId);
+    }
+
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 }

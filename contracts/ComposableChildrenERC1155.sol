@@ -46,7 +46,11 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
 
     function _msgSender() internal view override(Context, ERC2771Context) returns(address) {
         return ERC2771Context._msgSender();
+<<<<<<< HEAD
     }
+=======
+    } 
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 
     function _msgData() internal view override(Context, ERC2771Context) returns(bytes memory) {
         return ERC2771Context._msgData();
@@ -147,6 +151,11 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
 
         // check if owner has sufficient engagement points
 
+<<<<<<< HEAD
+=======
+        burn(_msgSender(), 0, upgradeCost); // burn engagement tid 0
+
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
         _mint(address(csnftContract), _upgradeToTierId, 1, data);
         ERC1155PresetMinterPauser._setURI(_composableId, _upgradeToTierId, _uri);
         _setOwnerTierId(_msgSender(), _upgradeToTierId);
@@ -155,6 +164,7 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
     }
 
 
+<<<<<<< HEAD
     function burn(address account, uint256 id, uint256 value) public virtual override(ERC1155Burnable) {
         require(false, "burn is not allowed to be called by definition");
     }
@@ -196,4 +206,6 @@ contract ComposableChildrenERC1155 is  ERC2771Context, ERC1155PresetMinterPauser
     {
         require(false, "_mintBatch is not allowed to be called by definition");
     }
+=======
+>>>>>>> d75956c6631d705884b63c216c396da0166706c4
 }

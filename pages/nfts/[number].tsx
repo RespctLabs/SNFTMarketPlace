@@ -34,62 +34,117 @@ import { checkValidity } from "../api/axios";
 
 function Buy() {
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
+  const [user, setUser] = useState(undefined);
+  const [nft, setNft] = useState(undefined);
+  const [upgrade, setupgrade] = useState(undefined);
 
-  const [URLpath, setURLpath] = useState(window.location.pathname.toString());
+  const [loading, setLoading] = React.useState(true);
+  const [upgradable, setupgradable] = React.useState(false);
 
-  const [Owner, setOwner] = React.useState(undefined);
+  const fetchUser = () => {
+    axios
+      .get(`/users/login?address=${connectedAccount}`)
+      .then((res) => {
+        setLoading(false);
+        setUser(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
-  const [isNFTminted, setisNFTminted] = React.useState(false);
-  const [isUserOwner, setisUserOwner] = React.useState(false);
-  const [isUserOtherOwner, setisUserOtherOwner] = React.useState(false);
+  const fetchUpgradable = () => {
+    axios
+      .get(`/nft/checkUpgradable`, {
+        params: {
+          address: connectedAccount,
+          parentAddress: user.user.parentAddress[0],
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setLoading(false);
+        setupgrade(res.data);
+        localStorage.setItem("upgrades", JSON.stringify(res.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
-  const [isNFTupgraded, setisNFTupgraded] = React.useState(false);
-  const [hasUserEngaged, sethasUserEngaged] = React.useState(false);
+  const fetchNFT = () => {
+    axios
+      .get(`/nft/getnftdata`, {
+        params: {
+          address: connectedAccount,
+          parentAddress: user.user.parentAddress[0],
+        },
+      })
+      .then((res) => {
+        setLoading(false);
+        setNft(res.data);
+        localStorage.setItem("nfts", JSON.stringify(res.data));
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
-  const [userName, setuserName] = React.useState("mysteriousmystery");
-  const [NFTlevel, setNFTlevel] = React.useState(0);
+  // const [URLpath, setURLpath] = useState(window.location.pathname.toString());
 
-  async function CheckifNFTminted() {
-    let response = await GetComposableCount(getProvider);
-    console.log(response);
-    let matches = parseInt(URLpath.match(/(\d+)/)[0]);
-    if (response == -1) {
-      setisNFTminted(false);
-    } else if (response >= matches) {
-      setisNFTminted(true);
-    } else {
-      setisNFTminted(false);
-    }
-  }
+  // const [Owner, setOwner] = React.useState(undefined);
 
-  async function CheckifUserOwnsthisNFT() {
-    let response = await CheckOwnership(getProvider, connectedAccount);
-    // console.log(response);
+  // const [isUserOwner, setisUserOwner] = React.useState(false);
+  // const [isUserOtherOwner, setisUserOtherOwner] = React.useState(false);
 
-    let matches = parseInt(URLpath.match(/(\d+)/)[0]);
-    if (response === matches) {
-      setisUserOwner(true);
-    } else if (response !== 0) {
-      setisUserOtherOwner(true);
-      setisUserOwner(false);
-    } else {
-      setisUserOtherOwner(false);
-      setisUserOwner(false);
-    }
-  }
+  // const [isNFTupgraded, setisNFTupgraded] = React.useState(false);
+  // const [hasUserEngaged, sethasUserEngaged] = React.useState(false);
 
-  async function CheckNFTlevel() {
-    let matches = parseInt(URLpath.match(/(\d+)/)[0]);
-    let response = await CheckLevel(getProvider, matches);
-    setNFTlevel(response);
-    if (response === -1) {
-      setisNFTupgraded(false);
-    } else if (response === 0) {
-      setisNFTupgraded(false);
-    } else {
-      setisNFTupgraded(true);
-    }
-  }
+  // const [userName, setuserName] = React.useState("mysteriousmystery");
+  // const [NFTlevel, setNFTlevel] = React.useState(0);
+
+  // async function CheckifNFTminted() {
+  //   let response = await GetComposableCount(getProvider);
+  //   console.log(response);
+  //   let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+  //   if (response == -1) {
+  //     setisNFTminted(false);
+  //   } else if (response >= matches) {
+  //     setisNFTminted(true);
+  //   } else {
+  //     setisNFTminted(false);
+  //   }
+  // }
+
+  // async function CheckifUserOwnsthisNFT() {
+  //   let response = await CheckOwnership(getProvider, connectedAccount);
+  //   // console.log(response);
+
+  //   let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+  //   if (response === matches) {
+  //     setisUserOwner(true);
+  //   } else if (response !== 0) {
+  //     setisUserOtherOwner(true);
+  //     setisUserOwner(false);
+  //   } else {
+  //     setisUserOtherOwner(false);
+  //     setisUserOwner(false);
+  //   }
+  // }
+
+  // async function CheckNFTlevel() {
+  //   let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+  //   let response = await CheckLevel(getProvider, matches);
+  //   setNFTlevel(response);
+  //   if (response === -1) {
+  //     setisNFTupgraded(false);
+  //   } else if (response === 0) {
+  //     setisNFTupgraded(false);
+  //   } else {
+  //     setisNFTupgraded(true);
+  //   }
+  // }
 
   // function CheckEngagement() {
   //     let url =
@@ -106,62 +161,62 @@ function Buy() {
   //     }
   // }
 
-  async function MintNFt() {
-    let response = await BuyNFT(getProvider, connectedAccount);
-    if (response) {
-      setisNFTminted(true);
-      setisUserOwner(true);
-    }
-  }
-  async function UpgradedNFT() {
-    let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+  // async function MintNFt() {
+  //   let response = await BuyNFT(getProvider, connectedAccount);
+  //   if (response) {
+  //     setisNFTminted(true);
+  //     setisUserOwner(true);
+  //   }
+  // }
+  // async function UpgradedNFT() {
+  //   let matches = parseInt(URLpath.match(/(\d+)/)[0]);
 
-    let response = await UpgradeNFT(getProvider, connectedAccount, matches, 1);
-    if (response) {
-      setisNFTminted(true);
-      setisUserOwner(true);
-      sethasUserEngaged(true);
-      setisNFTupgraded(true);
-    }
-  }
+  //   let response = await UpgradeNFT(getProvider, connectedAccount, matches, 1);
+  //   if (response) {
+  //     setisNFTminted(true);
+  //     setisUserOwner(true);
+  //     sethasUserEngaged(true);
+  //     setisNFTupgraded(true);
+  //   }
+  // }
 
-  async function GetOwnerDetails() {
-    let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+  // async function GetOwnerDetails() {
+  //   let matches = parseInt(URLpath.match(/(\d+)/)[0]);
 
-    let response = await OwnerOfNFT(getProvider, matches);
-    console.log(response);
-    setOwner(response);
+  //   let response = await OwnerOfNFT(getProvider, matches);
+  //   console.log(response);
+  //   setOwner(response);
 
-    // let matches = parseInt(URLpath.match(/(\d+)/)[0]);
-    // if (response === matches) {
-    //   setisUserOwner(true);
-    // } else if (response !== 0) {
-    //   setisUserOtherOwner(true);
-    //   setisUserOwner(false);
-    // } else {
-    //   setisUserOtherOwner(false);
-    //   setisUserOwner(false);
-    // }
-  }
+  //   // let matches = parseInt(URLpath.match(/(\d+)/)[0]);
+  //   // if (response === matches) {
+  //   //   setisUserOwner(true);
+  //   // } else if (response !== 0) {
+  //   //   setisUserOtherOwner(true);
+  //   //   setisUserOwner(false);
+  //   // } else {
+  //   //   setisUserOtherOwner(false);
+  //   //   setisUserOwner(false);
+  //   // }
+  // }
 
-  useEffect(() => {
-    CheckifNFTminted();
-    CheckifUserOwnsthisNFT();
-    CheckNFTlevel();
-    console.log("calling");
-    // CheckEngagement();
-    GetOwnerDetails();
-  });
+  // useEffect(() => {
+  //   CheckifNFTminted();
+  //   CheckifUserOwnsthisNFT();
+  //   CheckNFTlevel();
+  //   console.log("calling");
+  //   // CheckEngagement();
+  //   GetOwnerDetails();
+  // });
 
-  console.log(isNFTminted, " is nft minted");
-  console.log(isUserOwner, " is user owner");
-  console.log(isUserOtherOwner, " is user other owner");
-  console.log(isNFTupgraded, " is nft upgraded");
-  console.log(hasUserEngaged, " has user engaged");
+  // console.log(isNFTminted, " is nft minted");
+  // console.log(isUserOwner, " is user owner");
+  // console.log(isUserOtherOwner, " is user other owner");
+  // console.log(isNFTupgraded, " is nft upgraded");
+  // console.log(hasUserEngaged, " has user engaged");
 
-  console.log(URLpath, "URL path");
-  console.log(userName, " user name");
-  console.log(NFTlevel, " nft level");
+  // console.log(URLpath, "URL path");
+  // console.log(userName, " user name");
+  // console.log(NFTlevel, " nft level");
 
   return (
     <>
@@ -169,25 +224,21 @@ function Buy() {
         <div className="flex flex-col md:flex-row justify-between md:pt-12 ">
           <div id="left" className="md:w-1/2">
             <div className="flex justify-center mx-4 md:mx-0">
-              <div className="flex flex-col justify-center mt-10 md:mt-0 -mr-7 md:-mr-24">
-                <span className="uppercase stroke text-4xl md:text-8xl text-center bg-clip-text poppinsFont rotate-[270deg] text-OurBlack">
-                  Meta
-                </span>
-              </div>
               <div className="flex flex-col">
                 <span className="uppercase  text-center stroke pt-12 text-4xl md:text-8xl bg-clip-text poppinsFont text-OurBlack">
-                  Level {NFTlevel}
+                  Level {nft ? nft.nftData.currentLevel : ""}
                 </span>
                 <div className="nftImage shadow-2xl z-10 rounded-lg w-[200px] md:w-[358.28px] h-[200px] md:h-[364.28px]">
-                  <Image src={BuyNFT2} alt="image" />
+                  <Image
+                    src={nft ? nft.nftData.baseImageURL : BuyNFT2}
+                    alt="image"
+                    layout="responsive"
+                    height={400}
+                    width={400}
+                  />
                 </div>
                 <span className="uppercase stroke text-center text-4xl md:text-8xl bg-clip-text poppinsFont text-OurBlack">
-                  Respct
-                </span>
-              </div>
-              <div className="flex flex-col justify-center mt-10 md:mt-0 -ml-10 md:-ml-32">
-                <span className="uppercase stroke text-4xl md:text-8xl text-center bg-clip-text poppinsFont rotate-[270deg] text-OurBlack">
-                  Bunny
+                  {nft ? nft.nftData.guildName : "Guild"}
                 </span>
               </div>
             </div>
@@ -195,91 +246,59 @@ function Buy() {
           <div id="right" className="md:w-1/3 text-white md:py-12">
             <div className="mx-auto py-10 md:py-20 mx-5 md:mx-0">
               <div className="md:ml-10">
-                <p className="text-2xl md:text-6xl flex text-white">
-                  Meta Bunny
-                </p>
-                <span className="flex md:pt-2  ">
-                  <p>By &nbsp;</p>
-                  <p className="text-OurBlue">Respct</p>
-                </span>
-                <div className="flex my-5 md:mt-8 md:mb-8 ">
-                  <div>
-                    <Image src={Polygon} layout="fixed" alt="Polygon" />
-                  </div>
-                  <div className="flex flex-col md:mt-3 ">
-                    <div className="text-4xl text-OurBlue">1.00 MATIC</div>
-                    <div className="text-2xl text-OurSecondGrey md:mt-3">
-                      $1.46
+                <div className="flex flex-col md:flex-row md:pt-12 ">
+                  <div id="profileLeft" className="md:w-3/5 md:pr-12">
+                    <div className="w-75">
+                      <div> {user?.user.name}</div>
+                      <div> {user?.user.email}</div>
+                      <button onClick={fetchUser} className="text-sm">
+                        Fetch User
+                      </button>
+                      <br />
+
+                      <button onClick={fetchNFT} className="text-sm">
+                        Fetch NFTs
+                      </button>
+                      <br />
+                      <button onClick={fetchUpgradable} className="text-sm">
+                        Fetch Upgradable
+                      </button>
+                      <br />
                     </div>
                   </div>
+                  <div
+                    id="profileRight"
+                    className="my-3 md:my-0 mx-4 md:mx-0 md:w-2/5 md:pt-9 md:px-3"
+                  ></div>
                 </div>
+                <p className="text-2xl md:text-6xl flex text-white">
+                  {nft ? nft.nftData.guildName : "Guild"}
+                </p>
+                <span className="flex md:pt-2  ">
+                  <p>For &nbsp; &nbsp;</p>
+                  <p className="text-OurBlue">
+                    {" "}
+                    {nft ? nft.nftData.userAddress : "userAddress"}
+                  </p>
+                </span>
+                <br />
+                <br />
+                <br />
               </div>
 
               <div>
-                {isNFTminted ? (
-                  isUserOwner ? (
-                    isNFTupgraded ? (
-                      <>Congratulations</>
-                    ) : hasUserEngaged ? (
-                      <PrimaryButton
-                        flag="upgrade"
-                        onCli={() => {
-                          document
-                            .getElementsByClassName("upgradeModal")[0]
-                            .classList.remove("hidden");
-                          UpgradedNFT();
-                        }}
-                      />
-                    ) : (
-                      <>
-                        <div>
-                          <input
-                            className="rounded-2xl indent-3 border-2 border-white p-1 w-full md:w-1/2 text-black"
-                            type="text"
-                            placeholder="Enter your name"
-                            value={userName}
-                            required
-                            onChange={(e) => setuserName(e.target.value)}
-                          />
-                        </div>
-                        <TwitterShareButton
-                          url="snft.respct.club"
-                          title="My First Upgradable NFT"
-                          via={
-                            "Gathering Engagement Points for Upgrading My #Respct NFT to Level @RespctClub " +
-                            (NFTlevel + 1) +
-                            ". Let's Gooo!"
-                          }
-                          hashtags={["Respct", "NFT", "Upgrading", "Level"]}
-                        >
-                          Tweet
-                        </TwitterShareButton>
-
-                        <PrimaryButton
-                          flag="upgrade"
-                          onCli={(e) => {
-                            e.preventDefault();
-                            document
-                              .getElementsByClassName("upgradeModal")[0]
-                              .classList.remove("hidden");
-                            UpgradedNFT();
-                          }}
-                        />
-                      </>
-                    )
-                  ) : (
-                    <>{Owner} &nbsp; is the owner of this NFT</>
-                  )
-                ) : isUserOtherOwner ? (
-                  <>Already Owner of some other nft</>
+                {upgradable ? (
+                  <PrimaryButton
+                    flag="upgrade"
+                    onCli={() => {
+                      document
+                        .getElementsByClassName("upgradeModal")[0]
+                        .classList.remove("hidden");
+                    }}
+                  />
                 ) : (
                   <>
-                    <PrimaryButton
-                      flag="buy"
-                      onCli={() => {
-                        BuyNFT(getProvider, connectedAccount);
-                      }}
-                    />
+                    <div></div>
                   </>
                 )}
               </div>
@@ -302,7 +321,7 @@ function Buy() {
         </div>
         <div className="upgradeModal hidden">
           <UpgradeModal
-            NFTlevel={NFTlevel}
+            NFTlevel={nft ? nft.nftData.currentLevel : ""}
             onCli={() => {
               UpgradeNFT();
             }}
