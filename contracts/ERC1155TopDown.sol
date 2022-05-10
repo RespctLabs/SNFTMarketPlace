@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/token/ERC1155/ERC1155Receiver.sol";
+// import "@openzeppelin/contracts/token/ERC1155/ERC1155Receiver.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/utils/EnumerableSet.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 import "./IERC1155TopDown.sol";
 
-contract ERC1155TopDown is
-    ERC721,
-    ERC1155Receiver,
-    IERC1155TopDown
-{
+contract ERC1155TopDown is ERC721URIStorage, IERC1155TopDown {
     using EnumerableSet for EnumerableSet.AddressSet;
     using EnumerableSet for EnumerableSet.UintSet;
 
@@ -22,6 +21,7 @@ contract ERC1155TopDown is
 
     mapping(address => mapping(uint256 => EnumerableSet.UintSet))
         private _holdersOf;
+    
 
     mapping(uint256 => EnumerableSet.AddressSet) private _childContract;
 
@@ -30,10 +30,9 @@ contract ERC1155TopDown is
 
     constructor(
         string memory _name,
-        string memory _symbol,
-        string memory _baseURI
-    ) public ERC721(_name, _symbol) {
-        _setBaseURI(_baseURI);
+        string memory _symbol
+    )  ERC721(_name, _symbol) {
+        // _setBaseURI(_baseURI);
     }
 
     /**
@@ -131,7 +130,7 @@ contract ERC1155TopDown is
         }
 
         _receiveChild(_receiverTokenId, msg.sender, id, amount);
-        ReceivedChild(from, _receiverTokenId, msg.sender, id, amount);
+        emit ReceivedChild(from, _receiverTokenId, msg.sender, id, amount);
         //  tier++;
         return this.onERC1155Received.selector;
     }
@@ -231,7 +230,7 @@ contract ERC1155TopDown is
         }
         for (uint256 i = 0; i < ids.length; i++) {
             _receiveChild(_receiverTokenId, msg.sender, ids[i], values[i]);
-            ReceivedChild(
+            emit ReceivedChild(
                 from,
                 _receiverTokenId,
                 msg.sender,

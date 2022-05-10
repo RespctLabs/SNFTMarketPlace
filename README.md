@@ -1,72 +1,120 @@
-<p align="center">
-  <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/5e2cb1a3-f33d-4241-b726-719a5726f2bf/Logo_transparetn.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220403%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220403T145256Z&X-Amz-Expires=86400&X-Amz-Signature=56c3eefed777904a06b788f39629d1e3c061f78b63cd136e8c298c38871afce1&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Logo_transparetn.png%22&x-id=GetObject" alt="Logo"  height="100" >
+## Full stack NFT marketplace built with Polygon, Solidity, IPFS, & Next.js
 
-  <h3 align="center">Respct</h3>
+## Getting Started
 
-  <p align="center"><img src="https://img.shields.io/website?url=https://respct.club/&style=flat-square"> 
+- yarn hardhat node
+- yarn hardhat run scripts/deploy.js --network localhost
+- change contract addresses in config.ts
+- yarn run dev
+- add localhost account from hardhat node to metamask.
 
-  <p align="center">
-    <a href="https://www.respct.club/">Website</a>
-    . 
-    <a href="https://www.snft.respct.club/">Testnet</a> 
-      . 
-    <a href="https://twitter.com/RespctClub">Twitter</a>
-    . 
-    <a href="https://discord.com/invite/rPWpu3rTeZ">Discord</a>
-  </p>
-</p>  
+if Nonce : reset account form the metamask settings
 
-# Introducing Proof of Fandom
-<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/f8b9e682-1c98-409d-8d25-7b2bef136056/Mask_Group.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220403%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220403T135735Z&X-Amz-Expires=86400&X-Amz-Signature=e5bb01f60a61d575978f36e3c87a1f1c8d5599de12361baf9a9196f022465a73&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Mask%2520Group.png%22&x-id=GetObject" width=100%>
+![Header](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/pfofv47dooojerkmfgr4.png)
 
-We're introducing **Composable ERC 998 NFTs** to establish a _**proof-of-fandom**_ for the **creator economy**. 
+This is the codebase to go along with tbe blog post [Building a Full Stack NFT Marketplace on Ethereum with Polygon](https://dev.to/dabit3/building-scalable-full-stack-apps-on-ethereum-with-polygon-2cfb)
 
-#### How will it work? 
-- Creators would launch a collection of upgradable NFTs to incentivize their fans for un-lockable perks at different levels in return of engagement on different social media platforms through likes, shares, content consumed, comments, co-creation, etc. 
-- Apart from increased community engagement, creators would also enjoy growing royalty (based on the NFT level) for each transaction of their NFT thereafter. The users can unlock perks like DMs, AMAs, video calls, and share many such exciting moments with their favourite creators.
+### Running this project
 
-- To start this off, we have to create a _**bridge**_ between existing Web2 platforms like Twitter (live on testnet), YouTube, Discord, Twitch and Web3 tokenized communities (to be added soon) to give users the experience and feel of Web3. 
+#### Gitpod
 
-Let’s dive a little deeper :
+To deploy this project to Gitpod, follow these steps:
 
-### Social Non-Fungible Token or SNFTs
-SNFTs are ERC998 NFTs which accumulate points and upgrade (and attach more NFTs to your orignal NFT) as you interact with the creator’s content on various platforms. 
-  <p align="center">
-<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b29d70a0-80bf-4445-aa9b-811ceeb39937/SNFT.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220403%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220403T135612Z&X-Amz-Expires=86400&X-Amz-Signature=a1fe129d42432e8fd48a0af2a471a3af3c22145d639f422e46644035aeb47edd&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22SNFT.png%22&x-id=GetObject" width=80%>
-</p>
+1. Click this link to deploy
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#github.com/dabit3/polygon-ethereum-nextjs-marketplace)
 
-### What is ERC 998?
-ERC-998 is an extension to the  [ERC-721 standard](http://erc721.org/)  that adds the ability for non-fungible tokens to own other non-fungible tokens  and ERC-20 tokens.
-  <p align="center">
-<img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/29504c22-e795-425a-ba2d-e317c6b5ad8e/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220403%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220403T174642Z&X-Amz-Expires=86400&X-Amz-Signature=60e1a15cc32cc7743bd282c0e72a3b2149a35d07bd9b6e3fa1115147fcd16577&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject" width=80%> </p>
+2. Import the RPC address given to you by GitPod into your MetaMask wallet
 
-Non-fungible tokens that implement ERC998 also implement the ERC-721 standard.
+This endpoint will look something like this:
 
-The official ERC-998 standard is at this link:  [EIP-998](https://eips.ethereum.org/EIPS/eip-998)
+```
+https://8545-copper-swordtail-j1mvhxv3.ws-eu18.gitpod.io/
+```
 
-## 📚 Under the hood
+The chain ID should be 1337. If you have a localhost rpc set up, you may need to overwrite it.
 
-Here is the final stack we used
-Polygon, Solidity, IPFS, & Next.js
+![MetaMask RPC Import](wallet.png)
 
-- **Backend :**
-  - Hosted on Polygon
-  - Chainlink
-  - Written on Solidity
-  - Contracts from OpenZepplin
+#### Local setup
 
-- **NFT Marketplace:**
-  - Nextjs
-  - React
+To run this project locally, follow these steps.
 
-- **Deployment :**
-  - Polygon
-  - Digitalocean droplet for Vendure server
-  - Vercel for the landing page
+1. Clone the project locally, change into the directory, and install the dependencies:
 
+```sh
+git clone https://github.com/dabit3/polygon-ethereum-nextjs-marketplace.git
 
-How do you feel we can improve? We're open to feedback and feature requests.
+cd polygon-ethereum-nextjs-marketplace
 
-Got suggestions? 🚀
-Drop us an email on [founders@respct.club](tech@respct.club) or join our [Discord](https://discord.com/invite/rPWpu3rTeZ).
+# install using NPM or Yarn
+npm install
+
+# or
+
+yarn
+```
+
+2. Start the local Hardhat node
+
+```sh
+npx hardhat node
+```
+
+3. With the network running, deploy the contracts to the local network in a separate terminal window
+
+```sh
+npx hardhat run scripts/deploy.js --network localhost
+```
+
+4. Start the app
+
+```
+npm run dev
+```
+
+### Configuration
+
+To deploy to Polygon test or main networks, update the configurations located in **hardhat.config.js** to use a private key and, optionally, deploy to a private RPC like Infura.
+
+```javascript
+require("@nomiclabs/hardhat-waffle");
+const fs = require("fs");
+const privateKey =
+  fs.readFileSync(".secret").toString().trim() || "01234567890123456789";
+
+// infuraId is optional if you are using Infura RPC
+const infuraId = fs.readFileSync(".infuraid").toString().trim() || "";
+
+module.exports = {
+  defaultNetwork: "hardhat",
+  networks: {
+    hardhat: {
+      chainId: 1337,
+    },
+    mumbai: {
+      // Infura
+      // url: `https://polygon-mumbai.infura.io/v3/${infuraId}`
+      url: "https://rpc-mumbai.matic.today",
+      accounts: [privateKey],
+    },
+    matic: {
+      // Infura
+      // url: `https://polygon-mainnet.infura.io/v3/${infuraId}`,
+      url: "https://rpc-mainnet.maticvigil.com",
+      accounts: [privateKey],
+    },
+  },
+  solidity: {
+    version: "0.8.4",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200,
+      },
+    },
+  },
+};
+```
+
+If using Infura, update **.infuraid** with your [Infura](https://infura.io/) project ID.
