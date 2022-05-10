@@ -36,10 +36,9 @@ function Buy() {
   const { getProvider, connectedAccount } = useContext(BlockchainContext);
   const [user, setUser] = useState(undefined);
   const [nft, setNft] = useState(undefined);
-  const [upgrade, setupgrade] = useState(undefined);
+  const [upgrade, setupgrade] = useState(false);
 
   const [loading, setLoading] = React.useState(true);
-  const [upgradable, setupgradable] = React.useState(false);
 
   const fetchUser = () => {
     axios
@@ -60,13 +59,13 @@ function Buy() {
         params: {
           address: connectedAccount,
           parentAddress: user.user.parentAddress[0],
+          guildname: nft.nftData.guildName,
         },
       })
       .then((res) => {
-        console.log(res.data);
-        setLoading(false);
-        setupgrade(res.data);
-        localStorage.setItem("upgrades", JSON.stringify(res.data));
+        console.log(res.data.found);
+        setupgrade(res.data.found);
+        localStorage.setItem("upgrades", JSON.stringify(res.data.found));
       })
       .catch(function (error) {
         console.log(error);
@@ -287,7 +286,7 @@ function Buy() {
               </div>
 
               <div>
-                {upgradable ? (
+                {upgrade ? (
                   <PrimaryButton
                     flag="upgrade"
                     onCli={() => {
@@ -298,7 +297,7 @@ function Buy() {
                   />
                 ) : (
                   <>
-                    <div></div>
+                    <div> Cant upgrade right now</div>
                   </>
                 )}
               </div>
