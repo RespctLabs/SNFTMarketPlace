@@ -20,17 +20,23 @@ function Backendcall() {
   };
 
   return (
-    <div>
+    <div className="h-screen ">
       <input
         type="text"
         placeholder="Enter address"
         onChange={(e) => setaddress(e.target.value)}
       />
+      <br />
+      <br />
+
       <input
         type="text"
         placeholder="Enter parent address"
         onChange={(e) => setparentaddress(e.target.value)}
       />
+      <br />
+      <br />
+
       <button
         onClick={(e) => {
           e.preventDefault();
