@@ -49,7 +49,7 @@ const Login = () => {
   }
 
   useEffect(() => {
-    handlCheck();
+    // handlCheck();
     if (connectedAccount) {
       console.log(connectedAccount);
       router.push("/userdetails");
